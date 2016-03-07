@@ -25,9 +25,9 @@
             <canvas class="counter2" id="myCanvas2" width="125" height="75"></canvas>
 
             <span class="fa fa-play-circle startstop fa-4x" id="watch" value="Stop"></span>
-            <span class="fa fa-gear conf fa-lg"></span>
             <span class="fa fa-times-circle quit fa-lg"></span>
 
+            <span class="fa fa-gear     conf fa-lg" id="conf"></span>
             <span class="fa fa-calendar date fa-lg" id="calendar"></span>
 
             <span class="fa fa-circle-o pomodori pomodori1"></span>
@@ -45,6 +45,13 @@
             <div id="cal-heatmap"></div>
         </div>
 
+        <div class="config">
+            <span class="fa fa-clock-o fa-lg date" id="pomodoro"></span>
+
+            <input type="text" class="form-control input-xs" />
+            <input type="number" class="form-control input-xs" name="quantity" min="1" max="5"/>
+        </div>
+        
         <!-- JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->

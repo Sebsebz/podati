@@ -239,9 +239,21 @@ $(document).ready(function () {
             right: '-200px'
         }, 200);
     });
+
+    $('span#conf').click(function () {
+        $('.config').stop().animate({
+            right: 0
+        }, 200);
+        $('.pomodoro').stop().animate({
+            right: '-200px'
+        }, 200);
+    });
     
     $('span#pomodoro').click(function () {
         $('.datetime').stop().animate({
+            right: '-200px'
+        }, 200);
+        $('.config').stop().animate({
             right: '-200px'
         }, 200);
         $('.pomodoro').stop().animate({

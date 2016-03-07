@@ -12,6 +12,14 @@
     width:200px;
 }
 
+.config {
+    height:110px;
+    position:absolute;
+    right:-200px;
+    top:0;
+    width:200px;
+}
+
 body {
     -webkit-app-region: drag;
     background-color:rgba(0, 0, 0, 0.0);
@@ -32,7 +40,6 @@ body {
     left: 25px;
     position: absolute;
     top: 3px;
-    visibility: hidden;
 }
 
 .quit {
@@ -103,4 +110,14 @@ body {
     left: 0;
     position: absolute;
     top: 0;
+}
+
+
+.input-group-xs>.form-control,
+.input-group-xs>.input-group-addon,
+.input-group-xs>.input-group-btn>.btn {
+    height: 22px;
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
 }
