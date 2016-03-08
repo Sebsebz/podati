@@ -20,7 +20,7 @@
     </head>
 
     <body>
-        <div class="pomodoro" style="background-color:rgba(0, 0, 0, 0.0); border-radius: 0px;" >
+        <div class="pomodoro">
             <canvas class="counter" id="myCanvas" width="75" height="75"></canvas>
             <canvas class="counter2" id="myCanvas2" width="125" height="75"></canvas>
 
@@ -47,9 +47,27 @@
 
         <div class="config">
             <span class="fa fa-clock-o fa-lg date" id="pomodoro"></span>
+            
+            <div class="input-group">
+                <span class="input-group-addon text-input-xs">Work Time</span>
+                <input type="number" class="form-control input-xs" 
+                       name="workTime" min="1" max="59"/>
+            </div>
+            
+            <div class="input-group">
+                <span class="input-group-addon text-input-xs">Short Breaks</span>
+                <input type="number" class="form-control input-xs" 
+                       name="shortBreakTime" min="1" max="59"/>
+            </div>
+            
+            <div class="input-group">
+                <span class="input-group-addon text-input-xs">Long Breaks</span>
+                <input type="number" class="form-control input-xs" 
+                       name="longBreakTime" min="1" max="59"/>
+            </div>
+            
+            <button type="button" class="btn btn-default btn-xs btn-save">Save</button>
 
-            <input type="text" class="form-control input-xs" />
-            <input type="number" class="form-control input-xs" name="quantity" min="1" max="5"/>
         </div>
         
         <!-- JavaScript

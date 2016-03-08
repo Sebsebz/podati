@@ -176,6 +176,10 @@ function stopWatch() {
 $(document).ready(function () {
     'use strict';
     
+    $('input#longBreakTime').val(longBreakTime);
+    $('input#shortBreakTime').val(shortBreakTime);
+    $('input#workTime').val(pomodoriTime);
+
     $('span#watch').click(function (e) {
         var timerValue = 0;
 
@@ -236,7 +240,7 @@ $(document).ready(function () {
             right: 0
         }, 200);
         $('.pomodoro').stop().animate({
-            right: '-200px'
+            right: '-220px'
         }, 200);
     });
 
@@ -245,16 +249,16 @@ $(document).ready(function () {
             right: 0
         }, 200);
         $('.pomodoro').stop().animate({
-            right: '-200px'
+            right: '-220px'
         }, 200);
     });
     
     $('span#pomodoro').click(function () {
         $('.datetime').stop().animate({
-            right: '-200px'
+            right: '-220px'
         }, 200);
         $('.config').stop().animate({
-            right: '-200px'
+            right: '-220px'
         }, 200);
         $('.pomodoro').stop().animate({
             right: 0
