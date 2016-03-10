@@ -23,6 +23,7 @@
     "font-awesome": "^4.5.0",
     "ini": "1.3.4",
     "jquery": "2.2.0",
+    "materialize-css": "^0.97.5",
     "nw-notify": "^1.0.2"
   }
 }
