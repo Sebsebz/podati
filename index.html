@@ -20,14 +20,14 @@
     </head>
 
     <body>
-        <div class="pomodoro" style="background-color:rgba(0, 0, 0, 0.0); border-radius: 0px;" >
+        <div class="pomodoro">
             <canvas class="counter" id="myCanvas" width="75" height="75"></canvas>
             <canvas class="counter2" id="myCanvas2" width="125" height="75"></canvas>
 
             <span class="fa fa-play-circle startstop fa-4x" id="watch" value="Stop"></span>
-            <span class="fa fa-gear conf fa-lg"></span>
             <span class="fa fa-times-circle quit fa-lg"></span>
 
+            <span class="fa fa-gear     conf fa-lg" id="conf"></span>
             <span class="fa fa-calendar date fa-lg" id="calendar"></span>
 
             <span class="fa fa-circle-o pomodori pomodori1"></span>
@@ -45,6 +45,31 @@
             <div id="cal-heatmap"></div>
         </div>
 
+        <div class="config">
+            <span class="fa fa-clock-o fa-lg date" id="pomodoro"></span>
+            
+            <div class="input-group">
+                <span class="input-group-addon text-input-xs">Work Time</span>
+                <input type="number" class="form-control input-xs" value="0"
+                       name="workTime" min="1" max="59"/>
+            </div>
+            
+            <div class="input-group">
+                <span class="input-group-addon text-input-xs">Short Breaks</span>
+                <input type="number" class="form-control input-xs" value="0"
+                       name="shortBreakTime" min="1" max="59"/>
+            </div>
+            
+            <div class="input-group">
+                <span class="input-group-addon text-input-xs">Long Breaks</span>
+                <input type="number" class="form-control input-xs" value="0"
+                       name="longBreakTime" min="1" max="59"/>
+            </div>
+            
+            <button id="saveConf" type="button" class="btn btn-default btn-xs btn-save">Save</button>
+
+        </div>
+        
         <!-- JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
