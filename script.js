@@ -1,12 +1,10 @@
 /*jslint browser: true*/
 /*global $, jQuery, alert*/
 
-var isNodeWebkit = (typeof process == "object");
-
-if(isNodeWebkit) {
-var ini = require('ini');
-var fs  = require('fs');
-}
+//var ini        = require('ini');
+//var fs         = require('fs');
+//var d3         = require('d3');
+//var calheatmap = require('cal-heatmap');
 
 var timer;
 var timer2;
@@ -181,31 +179,32 @@ function stopWatch() {
 }
 
 $(document).ready(function () {
-    'use strict';
-    const configFile = 'configFile.ini'
+  // 'use strict';
+  // const configFile = 'configFile.ini'
+  // var config = ini.parse(fs.readFileSync(configFile, 'utf-8'))
+  // var win = require('nw.gui').Window.get();
+  // win.setAlwaysOnTop(true);
 
-    var config = ini.parse(fs.readFileSync(configFile, 'utf-8'))
+  // longBreakTime  = config.time.longBreakTime;
+  // shortBreakTime = config.time.shortBreakTime;
+  // pomodoriTime   = config.time.pomodoriTime;
+  // 
+  // $('input[name=longBreakTime]').val(longBreakTime / 60);
+  // $('input[name=shortBreakTime]').val(shortBreakTime / 60);
+  // $('input[name=workTime]').val(pomodoriTime / 60);
 
-    longBreakTime  = config.time.longBreakTime;
-    shortBreakTime = config.time.shortBreakTime;
-    pomodoriTime   = config.time.pomodoriTime;
-    
-    $('input[name=longBreakTime]').val(longBreakTime / 60);
-    $('input[name=shortBreakTime]').val(shortBreakTime / 60);
-    $('input[name=workTime]').val(pomodoriTime / 60);
+  // 
+  // $('button#saveConf').click(function (e) {
+  //     longBreakTime  = $('input[name=longBreakTime]').val() * 60;
+  //     shortBreakTime = $('input[name=shortBreakTime]').val() *60;
+  //     pomodoriTime   = $('input[name=workTime]').val() * 60;
+  //     config.time.longBreakTime   =  longBreakTime; 
+  //     config.time.shortBreakTime  =  shortBreakTime;
+  //     config.time.pomodoriTime    =  pomodoriTime;
+  //     
+  //    fs.writeFileSync(configFile, ini.stringify(config));
 
-    
-    $('button#saveConf').click(function (e) {
-        longBreakTime  = $('input[name=longBreakTime]').val() * 60;
-        shortBreakTime = $('input[name=shortBreakTime]').val() *60;
-        pomodoriTime   = $('input[name=workTime]').val() * 60;
-        config.time.longBreakTime   =  longBreakTime; 
-        config.time.shortBreakTime  =  shortBreakTime;
-        config.time.pomodoriTime    =  pomodoriTime;
-        
-       fs.writeFileSync(configFile, ini.stringify(config));
-
-    });
+  // });
                           
     $('span#watch').click(function (e) {
         var timerValue = 0;
@@ -297,17 +296,13 @@ $(document).ready(function () {
     
     drawTimer(0, pomodoriTime);
 
-    if(isNodeWebkit) {
-        var win = require('nw.gui').Window.get();
-        win.setAlwaysOnTop(true);
-    }
     updatePomodori();
-/*
-    require("d3")
-    require("cal-heatmap");
+
+
     var calendar_opeb = new CalHeatMap();
     
     calendar_opeb.init({
+        itemSelector: "#cal-heatmap",
         start: new Date("2016/02"),
         domain: "month",
         range: 3,
@@ -324,7 +319,7 @@ $(document).ready(function () {
         //subDomain: "x_day",
         //subDomainTextFormat: "%d"
     });
-*/
+
   
 });
 
