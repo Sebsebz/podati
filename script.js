@@ -1,6 +1,13 @@
 /*jslint browser: true*/
 /*global $, jQuery, alert*/
 
+var isNodeWebkit = (typeof process == "object");
+
+if(isNodeWebkit) {
+var ini = require('ini');
+var fs  = require('fs');
+}
+
 var timer;
 var timer2;
 
@@ -9,9 +16,9 @@ var timerFinish;
 var timerSeconds;
 var bool = false;
 
-var pomodoriTime   =   10; //25 * 60;
-var shortBreakTime =   2;  // 5 * 60;
-var longBreakTime  =   5;  //15 * 60;
+var pomodoriTime   =   25*60;
+var shortBreakTime =    5*60;
+var longBreakTime  =   10*60;
 
 var pomodoriNb        = 7;
 var pomodoriMaxNb     = 8;
@@ -175,11 +182,31 @@ function stopWatch() {
 
 $(document).ready(function () {
     'use strict';
-    
-    $('input#longBreakTime').val(longBreakTime);
-    $('input#shortBreakTime').val(shortBreakTime);
-    $('input#workTime').val(pomodoriTime);
+    const configFile = 'configFile.ini'
 
+    var config = ini.parse(fs.readFileSync(configFile, 'utf-8'))
+
+    longBreakTime  = config.time.longBreakTime;
+    shortBreakTime = config.time.shortBreakTime;
+    pomodoriTime   = config.time.pomodoriTime;
+    
+    $('input[name=longBreakTime]').val(longBreakTime / 60);
+    $('input[name=shortBreakTime]').val(shortBreakTime / 60);
+    $('input[name=workTime]').val(pomodoriTime / 60);
+
+    
+    $('button#saveConf').click(function (e) {
+        longBreakTime  = $('input[name=longBreakTime]').val() * 60;
+        shortBreakTime = $('input[name=shortBreakTime]').val() *60;
+        pomodoriTime   = $('input[name=workTime]').val() * 60;
+        config.time.longBreakTime   =  longBreakTime; 
+        config.time.shortBreakTime  =  shortBreakTime;
+        config.time.pomodoriTime    =  pomodoriTime;
+        
+       fs.writeFileSync(configFile, ini.stringify(config));
+
+    });
+                          
     $('span#watch').click(function (e) {
         var timerValue = 0;
 
@@ -270,8 +297,10 @@ $(document).ready(function () {
     
     drawTimer(0, pomodoriTime);
 
-    //var win = require('nw.gui').Window.get();
-    //win.setAlwaysOnTop(true);
+    if(isNodeWebkit) {
+        var win = require('nw.gui').Window.get();
+        win.setAlwaysOnTop(true);
+    }
     updatePomodori();
 /*
     require("d3")
