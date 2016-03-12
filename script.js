@@ -206,7 +206,12 @@ $(document).ready(function () {
        fs.writeFileSync(configFile, ini.stringify(config));
 
     });
-                          
+
+    $('.quit').click(function(e) {
+        var win = require('nw.gui').Window.get();
+        win.close();
+    });
+
     $('span#watch').click(function (e) {
         var timerValue = 0;
 
