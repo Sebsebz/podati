@@ -1,10 +1,8 @@
 /*jslint browser: true*/
 /*global $, jQuery, alert*/
 
-//var ini        = require('ini');
-//var fs         = require('fs');
-//var d3         = require('d3');
-//var calheatmap = require('cal-heatmap');
+var ini        = require('ini');
+var fs         = require('fs');
 
 var timer;
 var timer2;
@@ -14,9 +12,9 @@ var timerFinish;
 var timerSeconds;
 var bool = false;
 
-var pomodoriTime   =   25*60;
-var shortBreakTime =    5*60;
-var longBreakTime  =   10*60;
+var pomodoriTime   =   25 * 60;
+var shortBreakTime =    5 * 60;
+var longBreakTime  =   10 * 60;
 
 var pomodoriNb        = 7;
 var pomodoriMaxNb     = 8;
@@ -179,33 +177,128 @@ function stopWatch() {
 }
 
 $(document).ready(function () {
-  // 'use strict';
-  // const configFile = 'configFile.ini'
-  // var config = ini.parse(fs.readFileSync(configFile, 'utf-8'))
-  // var win = require('nw.gui').Window.get();
-  // win.setAlwaysOnTop(true);
+    'use strict';
 
-  // longBreakTime  = config.time.longBreakTime;
-  // shortBreakTime = config.time.shortBreakTime;
-  // pomodoriTime   = config.time.pomodoriTime;
-  // 
-  // $('input[name=longBreakTime]').val(longBreakTime / 60);
-  // $('input[name=shortBreakTime]').val(shortBreakTime / 60);
-  // $('input[name=workTime]').val(pomodoriTime / 60);
+    var configFile = 'configFile.ini';
+    var config = ini.parse(fs.readFileSync(configFile, 'utf-8'))
 
-  // 
-  // $('button#saveConf').click(function (e) {
-  //     longBreakTime  = $('input[name=longBreakTime]').val() * 60;
-  //     shortBreakTime = $('input[name=shortBreakTime]').val() *60;
-  //     pomodoriTime   = $('input[name=workTime]').val() * 60;
-  //     config.time.longBreakTime   =  longBreakTime; 
-  //     config.time.shortBreakTime  =  shortBreakTime;
-  //     config.time.pomodoriTime    =  pomodoriTime;
-  //     
-  //    fs.writeFileSync(configFile, ini.stringify(config));
+    var win = require('nw.gui').Window.get();
+    win.setAlwaysOnTop(true);
 
-  // });
-                          
+    longBreakTime  = config.time.longBreakTime;
+    shortBreakTime = config.time.shortBreakTime;
+    pomodoriTime   = config.time.pomodoriTime;
+    
+    $('input[name=longBreakTime]').val(longBreakTime / 60);
+    $('input[name=shortBreakTime]').val(shortBreakTime / 60);
+    $('input[name=workTime]').val(pomodoriTime / 60);
+
+    
+    $('button#saveConf').click(function (e) {
+        longBreakTime  = $('input[name=longBreakTime]').val() * 60;
+        shortBreakTime = $('input[name=shortBreakTime]').val() *60;
+        pomodoriTime   = $('input[name=workTime]').val() * 60;
+        config.time.longBreakTime   =  longBreakTime; 
+        config.time.shortBreakTime  =  shortBreakTime;
+        config.time.pomodoriTime    =  pomodoriTime;
+        
+       fs.writeFileSync(configFile, ini.stringify(config));
+
+    });
+
+    /**
+     * Returns the week number for this date.  dowOffset is the day of week the week
+     * "starts" on for your locale - it can be from 0 to 6. If dowOffset is 1 (Monday),
+     * the week returned is the ISO 8601 week number.
+     * @param int dowOffset
+     * @return int
+     */
+    Date.prototype.getWeek = function (dowOffset) {
+    /*getWeek() was developed by Nick Baicoianu at MeanFreePath: http://www.epoch-calendar.com */
+
+        dowOffset = typeof(dowOffset) == 'int' ? dowOffset : 0; //default dowOffset to zero
+        var newYear = new Date(this.getFullYear(),0,1);
+        var day = newYear.getDay() - dowOffset; //the day of week the year begins on
+        day = (day >= 0 ? day : day + 7);
+        var daynum = Math.floor((this.getTime() - newYear.getTime() - 
+        (this.getTimezoneOffset()-newYear.getTimezoneOffset())*60000)/86400000) + 1;
+        var weeknum;
+        //if the year starts before the middle of a week
+        if(day < 4) {
+            weeknum = Math.floor((daynum+day-1)/7) + 1;
+            if(weeknum > 52) {
+                nYear = new Date(this.getFullYear() + 1,0,1);
+                nday = nYear.getDay() - dowOffset;
+                nday = nday >= 0 ? nday : nday + 7;
+                /*if the next year starts before the middle of
+                  the week, it is week #1 of that year*/
+                weeknum = nday < 4 ? 1 : 53;
+            }
+        }
+        else {
+            weeknum = Math.floor((daynum+day-1)/7);
+        }
+        return weeknum;
+    };
+
+
+    const dayString   =["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
+    const monthString =["jan", "feb", "mar", 
+                       "apr", "may", "jun", 
+                       "jul", "aug", "sep", 
+                       "oct", "nov", "dec"];
+
+
+    var today   = new Date();
+    var endDate = new Date();
+    var myDate  = new Date();
+
+    myDate.setMonth(today.getMonth() - 1);
+    myDate.setDate(1);
+
+    endDate.setMonth(today.getMonth() + 2);
+    endDate.setDate(1);
+
+    var i    = 0;
+    var week = 0;
+    do {
+        if(myDate.getDate() === 1 ) {
+            var month = monthString[myDate.getMonth()];
+            document.getElementById("calheatmap").innerHTML += 
+                '<div class="month" style="left:' + 
+                11 * (week + 3) + 
+                'px">' + month + '</div>'
+
+
+            week = week + 1;
+        }
+
+        document.getElementById("calheatmap").innerHTML += 
+            '<div class="day ' + dayString[myDate.getDay()] +
+            (today.getTime() === myDate.getTime() ? " today ":"")+
+            '" style="left:' + 11*week + 'px" title="' +
+            myDate.getDate() + " " + 
+            monthString[myDate.getMonth()] + " " + 
+            myDate.getFullYear() + " " + 
+            '"></div>'
+
+
+        myDate.setDate(myDate.getDate() + 1);
+
+        if(myDate.getDay() === 1 ) {
+            var weekNb = myDate.getWeek();
+            document.getElementById("calheatmap").innerHTML += 
+                '<div class="week" style="left:' + 11 * week + 
+                'px;color:' + (weekNb%2 ? "red" : "blue") + '">' + 
+                get2D(weekNb) + '</div>'
+
+            week = week + 1;
+        }
+
+    } while (myDate.getTime() < endDate.getTime() )
+    
+    
+    
     $('span#watch').click(function (e) {
         var timerValue = 0;
 
@@ -297,54 +390,5 @@ $(document).ready(function () {
     drawTimer(0, pomodoriTime);
 
     updatePomodori();
-
-
-    var calendar_opeb = new CalHeatMap();
-    
-    calendar_opeb.init({
-        itemSelector: "#cal-heatmap",
-        start: new Date("2016/02"),
-        domain: "month",
-        range: 3,
-        cellSize: 10,
-        //cellRadius: 7,
-        legendVerticalPosition: "center",
-        legendOrientation: "vertical",
-        highlight: "now",
-        data: {"1457101844": 10,
-               "1457136000": 1},
-        legend: [7, 8, 9, 10, 11, 12],
-        displayLegend: false
-        //domain: "month",
-        //subDomain: "x_day",
-        //subDomainTextFormat: "%d"
-    });
-
   
 });
-
-
-/*
-    Date.prototype.getWeek = function () {
-        var onejan = new Date(this.getFullYear(), 0, 1);
-        return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
-    };
-
-    var weekNumber = (new Date()).getWeek();
-
-    var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    var now = new Date();
-    $('#toto').html(dayNames[now.getDay()] + " W" + weekNumber + "</br>" + now);
-
-*/
-
-/*
-a_window = window.open('popup.html', {
-        "position": "center",
-        "focus": true,
-        "toolbar": false,
-        "frame": true,
-        "width": 901,
-        "height": 127
-});
-*/

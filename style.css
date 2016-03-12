@@ -154,3 +154,54 @@ body {
     position: absolute;
     top: 0px;
 }
+
+.week{
+    position:absolute;
+    top:90px;
+    font-size:8px;
+    text-align: center;
+    font-family: "DejaVu Sans Mono", "Lucida Console", "Andale Mono", monospace;
+}
+
+.month{
+    position:absolute;
+    top:0px;
+    font-size:8px;
+    text-align: center;
+    font-family: "DejaVu Sans Mono", "Lucida Console", "Andale Mono", monospace;
+}
+
+.day{
+    width:10px;
+    height:10px;
+    position:absolute;
+    background:#d3d3d3;
+}
+
+.today{
+    padding:-1px -1px -1px -1px;
+    box-shadow: 0 0 0 1px red inset;
+}
+
+.mon {
+    top:11px;
+}
+.tue {
+    top:22px;
+}
+.wed {
+    top:33px;
+}
+.thu {
+    top:44px;
+}
+.fri {
+    top:55px;
+}
+.sat{
+    top:66px;
+}
+.sun {
+    top:77px;
+}
+
