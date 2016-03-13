@@ -23,6 +23,52 @@ var currentPomodori   = 1;
 var ratioLongBreak = 4;
 var isWorkingTime = true;
 
+
+/**
+ * Returns the week number for this date.  dowOffset is the day of week the week
+ * "starts" on for your locale - it can be from 0 to 6. If dowOffset is 1 (Monday),
+ * the week returned is the ISO 8601 week number.
+ * @param int dowOffset
+ * @return int
+ */
+/*getWeek() was developed by Nick Baicoianu at MeanFreePath: http://www.epoch-calendar.com */
+Date.prototype.getWeek = function (dowOffset) {
+    'use strict';
+
+    dowOffset = typeof (dowOffset) === 'int' ? dowOffset : 0; //default dowOffset to zero
+
+    var newYear   = new Date(this.getFullYear(), 0, 1),
+        day       = newYear.getDay() - dowOffset, //the day of week the year begins on
+        daynum    = Math.floor((this.getTime() - newYear.getTime() -
+             (this.getTimezoneOffset() - newYear.getTimezoneOffset()) * 60000) / 86400000) + 1,
+        weeknum   = 0,
+        nYear     = 0,
+        nday      = 0;
+
+    day = (day >= 0 ? day : day + 7);
+    
+    //if the year starts before the middle of a week
+    if (day < 4) {
+        weeknum = Math.floor((daynum + day - 1) / 7) + 1;
+        if (weeknum > 52) {
+            nYear = new Date(this.getFullYear() + 1, 0, 1);
+            nday = nYear.getDay() - dowOffset;
+            nday = nday >= 0 ? nday : nday + 7;
+            /*if the next year starts before the middle of
+              the week, it is week #1 of that year*/
+            weeknum = nday < 4 ? 1 : 53;
+        }
+    } else {
+        weeknum = Math.floor((daynum + day - 1) / 7);
+    }
+    return weeknum;
+};
+
+
+
+
+
+
 function updatePomodori() {
     'use strict';
 
@@ -176,13 +222,78 @@ function stopWatch() {
     }
 }
 
+function updateCalHeatMap() {
+    'use strict';
+
+    var dayString   = ["sun", "mon",
+                       "tue", "wed",
+                       "thu", "fri",
+                       "sat"],
+        monthString = ["jan", "feb", "mar",
+                       "apr", "may", "jun",
+                       "jul", "aug", "sep",
+                       "oct", "nov", "dec"],
+        today   = new Date(),
+        endDate = new Date(),
+        myDate  = new Date(),
+        i       = 0,
+        week    = 0,
+        weekNb  = 0,
+        month   = 0;
+
+    myDate.setMonth(today.getMonth() - 1);
+    myDate.setDate(1);
+
+    endDate.setMonth(today.getMonth() + 2);
+    endDate.setDate(1);
+
+    do {
+        if (myDate.getDate() === 1) {
+            month = monthString[myDate.getMonth()];
+            document.getElementById("calheatmap").innerHTML +=
+                '<div class="month" style="left:' +
+                11 * (week + 3) +
+                'px">' + month + '</div>';
+
+
+            week = week + 1;
+        }
+
+        document.getElementById("calheatmap").innerHTML +=
+            '<div class="day ' + dayString[myDate.getDay()] +
+            (today.getTime() === myDate.getTime() ? " today " : "") +
+            '" style="left:' + 11 * week + 'px" title="' +
+            myDate.getDate() + " " +
+            monthString[myDate.getMonth()] + " " +
+            myDate.getFullYear() + " " +
+            '"></div>';
+
+
+        myDate.setDate(myDate.getDate() + 1);
+
+        if (myDate.getDay() === 1) {
+            weekNb = myDate.getWeek();
+            document.getElementById("calheatmap").innerHTML +=
+                '<div class="week" style="left:' + 11 * week +
+                'px;color:' + (weekNb % 2 ? "red" : "blue") + '">' +
+                get2D(weekNb) + '</div>';
+
+            week = week + 1;
+        }
+
+    } while (myDate.getTime() < endDate.getTime());
+}
+
 $(document).ready(function () {
     'use strict';
 
-    var configFile = 'configFile.ini';
-    var config = ini.parse(fs.readFileSync(configFile, 'utf-8'))
+    updateCalHeatMap();
 
-    var win = require('nw.gui').Window.get();
+    var configFile = 'configFile.ini',
+        config = ini.parse(fs.readFileSync(configFile, 'utf-8')),
+        win = require('nw.gui').Window.get();
+    
+
     win.setAlwaysOnTop(true);
 
     longBreakTime  = config.time.longBreakTime;
@@ -196,109 +307,16 @@ $(document).ready(function () {
     
     $('button#saveConf').click(function (e) {
         longBreakTime  = $('input[name=longBreakTime]').val() * 60;
-        shortBreakTime = $('input[name=shortBreakTime]').val() *60;
+        shortBreakTime = $('input[name=shortBreakTime]').val() * 60;
         pomodoriTime   = $('input[name=workTime]').val() * 60;
-        config.time.longBreakTime   =  longBreakTime; 
-        config.time.shortBreakTime  =  shortBreakTime;
-        config.time.pomodoriTime    =  pomodoriTime;
+        config.time.longBreakTime   = longBreakTime;
+        config.time.shortBreakTime  = shortBreakTime;
+        config.time.pomodoriTime    = pomodoriTime;
         
-       fs.writeFileSync(configFile, ini.stringify(config));
+        fs.writeFileSync(configFile, ini.stringify(config));
 
     });
 
-    /**
-     * Returns the week number for this date.  dowOffset is the day of week the week
-     * "starts" on for your locale - it can be from 0 to 6. If dowOffset is 1 (Monday),
-     * the week returned is the ISO 8601 week number.
-     * @param int dowOffset
-     * @return int
-     */
-    Date.prototype.getWeek = function (dowOffset) {
-    /*getWeek() was developed by Nick Baicoianu at MeanFreePath: http://www.epoch-calendar.com */
-
-        dowOffset = typeof(dowOffset) == 'int' ? dowOffset : 0; //default dowOffset to zero
-        var newYear = new Date(this.getFullYear(),0,1);
-        var day = newYear.getDay() - dowOffset; //the day of week the year begins on
-        day = (day >= 0 ? day : day + 7);
-        var daynum = Math.floor((this.getTime() - newYear.getTime() - 
-        (this.getTimezoneOffset()-newYear.getTimezoneOffset())*60000)/86400000) + 1;
-        var weeknum;
-        //if the year starts before the middle of a week
-        if(day < 4) {
-            weeknum = Math.floor((daynum+day-1)/7) + 1;
-            if(weeknum > 52) {
-                nYear = new Date(this.getFullYear() + 1,0,1);
-                nday = nYear.getDay() - dowOffset;
-                nday = nday >= 0 ? nday : nday + 7;
-                /*if the next year starts before the middle of
-                  the week, it is week #1 of that year*/
-                weeknum = nday < 4 ? 1 : 53;
-            }
-        }
-        else {
-            weeknum = Math.floor((daynum+day-1)/7);
-        }
-        return weeknum;
-    };
-
-
-    const dayString   =["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
-    const monthString =["jan", "feb", "mar", 
-                       "apr", "may", "jun", 
-                       "jul", "aug", "sep", 
-                       "oct", "nov", "dec"];
-
-
-    var today   = new Date();
-    var endDate = new Date();
-    var myDate  = new Date();
-
-    myDate.setMonth(today.getMonth() - 1);
-    myDate.setDate(1);
-
-    endDate.setMonth(today.getMonth() + 2);
-    endDate.setDate(1);
-
-    var i    = 0;
-    var week = 0;
-    do {
-        if(myDate.getDate() === 1 ) {
-            var month = monthString[myDate.getMonth()];
-            document.getElementById("calheatmap").innerHTML += 
-                '<div class="month" style="left:' + 
-                11 * (week + 3) + 
-                'px">' + month + '</div>'
-
-
-            week = week + 1;
-        }
-
-        document.getElementById("calheatmap").innerHTML += 
-            '<div class="day ' + dayString[myDate.getDay()] +
-            (today.getTime() === myDate.getTime() ? " today ":"")+
-            '" style="left:' + 11*week + 'px" title="' +
-            myDate.getDate() + " " + 
-            monthString[myDate.getMonth()] + " " + 
-            myDate.getFullYear() + " " + 
-            '"></div>'
-
-
-        myDate.setDate(myDate.getDate() + 1);
-
-        if(myDate.getDay() === 1 ) {
-            var weekNb = myDate.getWeek();
-            document.getElementById("calheatmap").innerHTML += 
-                '<div class="week" style="left:' + 11 * week + 
-                'px;color:' + (weekNb%2 ? "red" : "blue") + '">' + 
-                get2D(weekNb) + '</div>'
-
-            week = week + 1;
-        }
-
-    } while (myDate.getTime() < endDate.getTime() )
-    
-    
-    
     $('span#watch').click(function (e) {
         var timerValue = 0;
 
