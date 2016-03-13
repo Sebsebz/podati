@@ -9,11 +9,11 @@
   "author": "",
   "window": {
     "frame": false,
-    "toolbar": false,
+    "toolbar": true,
     "width": 220,
     "height": 100,
-    "transparent": true,
-    "resizable": false,
+    "transparent": false,
+    "resizable": true,
     "fullscreen": false
   },
   "dependencies": {

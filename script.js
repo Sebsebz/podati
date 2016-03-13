@@ -65,8 +65,20 @@ Date.prototype.getWeek = function (dowOffset) {
 };
 
 
+function readPomodoro() {
 
+    var dbPomodoro;
 
+  $.ajax({
+    url: './pomodoro.json',
+    dataType: 'json',
+    success: function( dbPomodoro ) {
+        updateCalHeatMap(dbPomodoro);
+    },
+    error: function( dbPomodoro ) {
+    }
+  });
+}
 
 
 function updatePomodori() {
@@ -222,7 +234,7 @@ function stopWatch() {
     }
 }
 
-function updateCalHeatMap() {
+function updateCalHeatMap(dbPomodoro) {
     'use strict';
 
     var dayString   = ["sun", "mon",
@@ -239,7 +251,10 @@ function updateCalHeatMap() {
         i       = 0,
         week    = 0,
         weekNb  = 0,
-        month   = 0;
+        month   = 0,
+        dateKey = "",
+        heatmap = "",
+        pomodoroNb = 0;
 
     myDate.setMonth(today.getMonth() - 1);
     myDate.setDate(1);
@@ -259,13 +274,34 @@ function updateCalHeatMap() {
             week = week + 1;
         }
 
+        heatmap    = "";
+        pomodoroNb = 0;
+        dateKey = myDate.getFullYear() + "/" + (myDate.getMonth() + 1) + "/" + myDate.getDate() 
+        if (typeof dbPomodoro[dateKey] != 'undefined') {
+            if(dbPomodoro[dateKey] > 0 && dbPomodoro[dateKey] < 3 ) {
+                heatmap = "v1";
+            } else if (dbPomodoro[dateKey] >= 3 && dbPomodoro[dateKey] < 6) {
+                heatmap = "v2";
+            } else if (dbPomodoro[dateKey] >= 3 && dbPomodoro[dateKey] < 6) {
+                heatmap = "v3";
+            } else if (dbPomodoro[dateKey] >= 6 && dbPomodoro[dateKey] < 9) {
+                heatmap = "v4";
+            }  else if (dbPomodoro[dateKey] >= 9 && dbPomodoro[dateKey] < 12) {
+                heatmap = "v5";
+            }  else if (dbPomodoro[dateKey] >= 12) {
+                heatmap = "v6";
+            }
+            pomodoroNb = dbPomodoro[dateKey];
+        }
+        
         document.getElementById("calheatmap").innerHTML +=
             '<div class="day ' + dayString[myDate.getDay()] +
+            " " + heatmap + " " +
             (today.getTime() === myDate.getTime() ? " today " : "") +
             '" style="left:' + 11 * week + 'px" title="' +
             myDate.getDate() + " " +
             monthString[myDate.getMonth()] + " " +
-            myDate.getFullYear() + " " +
+            myDate.getFullYear() + " : " + pomodoroNb +
             '"></div>';
 
 
@@ -287,7 +323,7 @@ function updateCalHeatMap() {
 $(document).ready(function () {
     'use strict';
 
-    updateCalHeatMap();
+    readPomodoro();
 
     var configFile = 'configFile.ini',
         config = ini.parse(fs.readFileSync(configFile, 'utf-8')),
