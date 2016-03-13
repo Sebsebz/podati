@@ -26,5 +26,8 @@
     "jquery": "2.2.0",
     "materialize-css": "^0.97.5",
     "nw-notify": "^1.0.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
   }
 }
