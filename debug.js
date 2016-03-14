@@ -34,8 +34,6 @@ gulp.task('css', function () {
     }
 });
 
-win.showDevTools('', true);
-
 /* Check for debug purpose */
 for (t_i = 0; t_i < gui.App.argv.length; t_i += 1) {
     if (gui.App.argv[t_i] === 'dev') {
@@ -44,6 +42,8 @@ for (t_i = 0; t_i < gui.App.argv.length; t_i += 1) {
 }
 
 if (debug_activated === true) {
+    win.showDevTools('', true);
+
     gulp.watch(['*.css'], ['css']);
     gulp.watch(['*.scss'], ['scss']);
     gulp.watch(['*.js'], ['js']);

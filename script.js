@@ -183,23 +183,11 @@ function stopWatch() {
 $(document).ready(function () {
     'use strict';
     const configFile = 'configFile.ini';
-    var config_page;
-
     var config = ini.parse(fs.readFileSync(configFile, 'utf-8'))
 
     longBreakTime  = config.time.longBreakTime;
     shortBreakTime = config.time.shortBreakTime;
     pomodoriTime   = config.time.pomodoriTime;
-
-    $('.config').stop().animate({
-            right: 0
-        }, 200);
-    $('.pomodoro').stop().animate({
-            right: '-220px'
-        }, 200);
-    config_page = 1;
-    $('#nav-config-up')[0].setAttribute("class", 'fa fa-caret-up fa-lg nav-config nav-config-limit');
-    $('#nav-config-down')[0].setAttribute("class", 'fa fa-caret-down fa-lg nav-config');
 
     $('input[name=longBreakTime]').val(longBreakTime / 60);
     $('input[name=shortBreakTime]').val(shortBreakTime / 60);
@@ -290,9 +278,6 @@ $(document).ready(function () {
         $('.pomodoro').stop().animate({
             right: '-220px'
         }, 200);
-        config_page = 1;
-        $('#nav-config-up')[0].setAttribute("class", 'fa fa-caret-up fa-lg nav-config nav-config-limit');
-        $('#nav-config-down')[0].setAttribute("class", 'fa fa-caret-down fa-lg nav-config');
     });
 
     $('span#pomodoro').click(function () {
@@ -305,42 +290,6 @@ $(document).ready(function () {
         $('.pomodoro').stop().animate({
             right: 0
         }, 200);
-    });
-
-    $('#nav-config-up').click(function () {
-        if(config_page > 1) {
-            $('.range-group').stop().animate({
-                top: "-" +(config_page - 1) * 85 + "px"
-            }, 200);
-            config_page--;
-            $('.range-group').stop().animate({
-                top: "-" +(config_page - 1) * 85 + "px"
-            }, 200);
-
-            if(config_page === 1)
-            {
-                $('#nav-config-up')[0].setAttribute("class", 'fa fa-caret-up fa-lg nav-config nav-config-limit');
-            }
-            $('#nav-config-down')[0].setAttribute("class", 'fa fa-caret-down fa-lg nav-config');
-        }
-    });
-
-    $('#nav-config-down').click(function () {
-        if(config_page < 3) {
-            $('.range-group').stop().animate({
-                top: "-" +(config_page - 1) * 85 + "px"
-            }, 200);
-            config_page++;
-            $('.range-group').stop().animate({
-                top: "-" +(config_page - 1) * 85 + "px"
-            }, 200);
-
-            if(config_page === 3)
-            {
-                $('#nav-config-down')[0].setAttribute("class", 'fa fa-caret-down fa-lg nav-config nav-config-limit');
-            }
-            $('#nav-config-up')[0].setAttribute("class", 'fa fa-caret-up fa-lg nav-config');
-        }
     });
 
     $('span#watch').click();
