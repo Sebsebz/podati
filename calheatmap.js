@@ -1,82 +1,87 @@
 /** 
  * Get the ISO week date week number 
- */  
-Date.prototype.getWeek = function () {  
-    // Create a copy of this date object  
-    var target  = new Date(this.valueOf());  
+ */
+Date.prototype.getWeek = function () {
+    'use strict';
+
+    // Create a copy of this date object
+    var target  = new Date(this.valueOf());
   
-    // ISO week date weeks start on monday  
-    // so correct the day number  
-    var dayNr   = (this.getDay() + 6) % 7;  
+    // ISO week date weeks start on monday
+    // so correct the day number
+    var dayNr   = (this.getDay() + 6) % 7;
   
-    // ISO 8601 states that week 1 is the week  
-    // with the first thursday of that year.  
-    // Set the target date to the thursday in the target week  
-    target.setDate(target.getDate() - dayNr + 3);  
+    // ISO 8601 states that week 1 is the week
+    // with the first thursday of that year.
+    // Set the target date to the thursday in the target week
+    target.setDate(target.getDate() - dayNr + 3);
   
-    // Store the millisecond value of the target date  
-    var firstThursday = target.valueOf();  
+    // Store the millisecond value of the target date
+    var firstThursday = target.valueOf();
   
-    // Set the target to the first thursday of the year  
-    // First set the target to january first  
-    target.setMonth(0, 1);  
-    // Not a thursday? Correct the date to the next thursday  
-    if (target.getDay() != 4) {  
-        target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);  
-    }  
+    // Set the target to the first thursday of the year
+    // First set the target to january first
+    target.setMonth(0, 1);
+    // Not a thursday? Correct the date to the next thursday
+    if (target.getDay() !== 4) {
+        target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
+    }
   
-    // The weeknumber is the number of weeks between the   
-    // first thursday of the year and the thursday in the target week  
-    return 1 + Math.ceil((firstThursday - target) / 604800000); // 604800000 = 7 * 24 * 3600 * 1000  
-}
+    // The weeknumber is the number of weeks between the
+    // first thursday of the year and the thursday in the target week
+    return 1 + Math.ceil((firstThursday - target) / 604800000); // 604800000 = 7 * 24 * 3600 * 1000
+};
 
 function readPomodoro() {
+    'use strict';
 
     var dbPomodoro;
 
-  $.ajax({
-    url: './pomodoro.json',
-    dataType: 'json',
-    success: function( dbPomodoro ) {
-        updateCalHeatMap(dbPomodoro);
-    },
-    error: function( dbPomodoro ) {
-    }
-  });
+    $.ajax({
+        url: './pomodoro.json',
+        dataType: 'json',
+        success: function (dbPomodoro) {
+            updateCalHeatMap(dbPomodoro);
+        },
+        error: function (dbPomodoro) {
+        }
+    });
 }
 
 function writePomodoro() {
+    'use strict';
 
-  var dbPomodoro;
+    var dbPomodoro;
 
-  $.ajax({
-    url: './pomodoro.json',
-    dataType: 'json',
-    success: function( dbPomodoro ) {
-        var today   = new Date(),
-            dateKey =          today.getFullYear() 
-                      + "/" + (today.getMonth() + 1) 
-                      + "/" + today.getDate();
-        
-        if (typeof dbPomodoro[dateKey] != 'undefined') {
-            dbPomodoro[dateKey] = dbPomodoro[dateKey] + 1;
-        } else {
-            dbPomodoro[dateKey] = 1;
-        }
-        
-        fs.writeFile("./pomodoro.json", JSON.stringify(dbPomodoro,null, 4), function(err) {
-            if(err) {
-                return console.log(err);
+    $.ajax({
+        url: './pomodoro.json',
+        dataType: 'json',
+        success: function (dbPomodoro) {
+            var today   = new Date(),
+                dateKey =          today.getFullYear()
+                          + "/" + (today.getMonth() + 1)
+                          + "/" + today.getDate();
+
+            if (typeof dbPomodoro[dateKey] !== 'undefined') {
+                dbPomodoro[dateKey] = dbPomodoro[dateKey] + 1;
+            } else {
+                dbPomodoro[dateKey] = 1;
             }
 
-            console.log("The file was saved!");
-        }); 
+            fs.writeFile("./pomodoro.json",
+                         JSON.stringify(dbPomodoro, null, 4), function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
 
-        updateCalHeatMap(dbPomodoro);
-    },
-    error: function( dbPomodoro ) {
-    }
-  });
+                    console.log("The file was saved!");
+                });
+
+            updateCalHeatMap(dbPomodoro);
+        },
+        error: function (dbPomodoro) {
+        }
+    });
 }
  
 function updateCalHeatMap(dbPomodoro) {
@@ -121,9 +126,9 @@ function updateCalHeatMap(dbPomodoro) {
 
         heatmap    = "";
         pomodoroNb = 0;
-        dateKey = myDate.getFullYear() + "/" + (myDate.getMonth() + 1) + "/" + myDate.getDate() 
-        if (typeof dbPomodoro[dateKey] != 'undefined') {
-            if(dbPomodoro[dateKey] > 0 && dbPomodoro[dateKey] < 3 ) {
+        dateKey = myDate.getFullYear() + "/" + (myDate.getMonth() + 1) + "/" + myDate.getDate();
+        if (typeof dbPomodoro[dateKey] !== 'undefined') {
+            if (dbPomodoro[dateKey] > 0 && dbPomodoro[dateKey] < 3) {
                 heatmap = "v1";
             } else if (dbPomodoro[dateKey] >= 3 && dbPomodoro[dateKey] < 6) {
                 heatmap = "v2";
@@ -131,9 +136,9 @@ function updateCalHeatMap(dbPomodoro) {
                 heatmap = "v3";
             } else if (dbPomodoro[dateKey] >= 6 && dbPomodoro[dateKey] < 9) {
                 heatmap = "v4";
-            }  else if (dbPomodoro[dateKey] >= 9 && dbPomodoro[dateKey] < 12) {
+            } else if (dbPomodoro[dateKey] >= 9 && dbPomodoro[dateKey] < 12) {
                 heatmap = "v5";
-            }  else if (dbPomodoro[dateKey] >= 12) {
+            } else if (dbPomodoro[dateKey] >= 12) {
                 heatmap = "v6";
             }
             pomodoroNb = dbPomodoro[dateKey];

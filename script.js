@@ -66,18 +66,22 @@ Date.prototype.getWeek = function (dowOffset) {
 
 
 function readPomodoro() {
+    'use strict';
 
     var dbPomodoro;
 
-  $.ajax({
-    url: './pomodoro.json',
-    dataType: 'json',
-    success: function( dbPomodoro ) {
-        updateCalHeatMap(dbPomodoro);
-    },
-    error: function( dbPomodoro ) {
-    }
-  });
+    $.ajax({
+        url: './pomodoro.json',
+        dataType: 'json',
+
+        success: function (dbPomodoro) {
+            updateCalHeatMap(dbPomodoro);
+        },
+
+        error: function (dbPomodoro) {
+
+        }
+    });
 }
 
 
@@ -277,9 +281,12 @@ function updateCalHeatMap(dbPomodoro) {
 
         heatmap    = "";
         pomodoroNb = 0;
-        dateKey = myDate.getFullYear() + "/" + (myDate.getMonth() + 1) + "/" + myDate.getDate() 
-        if (typeof dbPomodoro[dateKey] != 'undefined') {
-            if(dbPomodoro[dateKey] > 0 && dbPomodoro[dateKey] < 3 ) {
+        dateKey = myDate.getFullYear() + "/" +
+                 (myDate.getMonth() + 1) + "/" +
+                  myDate.getDate();
+
+        if (typeof dbPomodoro[dateKey] !== 'undefined') {
+            if (dbPomodoro[dateKey] > 0 && dbPomodoro[dateKey] < 3) {
                 heatmap = "v1";
             } else if (dbPomodoro[dateKey] >= 3 && dbPomodoro[dateKey] < 6) {
                 heatmap = "v2";
@@ -287,9 +294,9 @@ function updateCalHeatMap(dbPomodoro) {
                 heatmap = "v3";
             } else if (dbPomodoro[dateKey] >= 6 && dbPomodoro[dateKey] < 9) {
                 heatmap = "v4";
-            }  else if (dbPomodoro[dateKey] >= 9 && dbPomodoro[dateKey] < 12) {
+            } else if (dbPomodoro[dateKey] >= 9 && dbPomodoro[dateKey] < 12) {
                 heatmap = "v5";
-            }  else if (dbPomodoro[dateKey] >= 12) {
+            } else if (dbPomodoro[dateKey] >= 12) {
                 heatmap = "v6";
             }
             pomodoroNb = dbPomodoro[dateKey];
@@ -349,10 +356,10 @@ $(document).ready(function () {
         config.time.shortBreakTime  = shortBreakTime;
         config.time.pomodoriTime    = pomodoriTime;
 
-       fs.writeFileSync(configFile, ini.stringify(config));
+        fs.writeFileSync(configFile, ini.stringify(config));
     });
 
-    $('.quit').click(function(e) {
+    $('.quit').click(function (e) {
         var win = require('nw.gui').Window.get();
         win.close();
     });
