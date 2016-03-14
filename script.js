@@ -31,7 +31,7 @@ function updatePomodori() {
     'use strict';
 
     var i;
-    
+
     for (i = 1; i <= pomodoriNb; i = i + 1) {
         $('span.pomodori' + i)[0].style.visibility = 'visible';
         if (i < currentPomodori) {
@@ -129,7 +129,7 @@ function drawTimer(percent, time) {
     } else {
         context.strokeStyle = '#18d83d';
     }
-    
+
     context.stroke();
 
     canvas  = document.getElementById('myCanvas2');
@@ -142,7 +142,7 @@ function drawTimer(percent, time) {
     // line color
     context.strokeStyle = '#198212';
     context.stroke();
-    
+
 }
 
 function stopWatch() {
@@ -163,7 +163,7 @@ function stopWatch() {
         timer2 = setInterval(function () {
             pomodoriEnd();
         }, 500);
-        
+
         /// Timer end
         if (isWorkingTime === true) {
             isWorkingTime = false;
@@ -173,7 +173,7 @@ function stopWatch() {
         }
 
         updatePomodori();
-        
+
     } else {
         percent = 100 - ((seconds / timerSeconds) * 100);
         drawTimer(percent, seconds);
@@ -182,29 +182,26 @@ function stopWatch() {
 
 $(document).ready(function () {
     'use strict';
-    const configFile = 'configFile.ini'
-
+    const configFile = 'configFile.ini';
     var config = ini.parse(fs.readFileSync(configFile, 'utf-8'))
 
     longBreakTime  = config.time.longBreakTime;
     shortBreakTime = config.time.shortBreakTime;
     pomodoriTime   = config.time.pomodoriTime;
-    
+
     $('input[name=longBreakTime]').val(longBreakTime / 60);
     $('input[name=shortBreakTime]').val(shortBreakTime / 60);
     $('input[name=workTime]').val(pomodoriTime / 60);
 
-    
-    $('button#saveConf').click(function (e) {
+    $('div#saveConf').click(function (e) {
         longBreakTime  = $('input[name=longBreakTime]').val() * 60;
         shortBreakTime = $('input[name=shortBreakTime]').val() *60;
         pomodoriTime   = $('input[name=workTime]').val() * 60;
-        config.time.longBreakTime   =  longBreakTime; 
+        config.time.longBreakTime   =  longBreakTime;
         config.time.shortBreakTime  =  shortBreakTime;
         config.time.pomodoriTime    =  pomodoriTime;
-        
-       fs.writeFileSync(configFile, ini.stringify(config));
 
+       fs.writeFileSync(configFile, ini.stringify(config));
     });
 
     $('.quit').click(function(e) {
@@ -261,12 +258,10 @@ $(document).ready(function () {
         if ($('span#watch')[0].getAttribute("value") === 'Stop') {
             $('span#watch')[0].setAttribute("value", 'Pause');
             $('span#watch')[0].setAttribute("class", 'fa fa-pause-circle-o fa-4x startstop fa-4x');
-            
             clearInterval(timer);
-            
         }
     });
-    
+
     $('span#calendar').click(function () {
         $('.datetime').stop().animate({
             right: 0
@@ -284,7 +279,7 @@ $(document).ready(function () {
             right: '-220px'
         }, 200);
     });
-    
+
     $('span#pomodoro').click(function () {
         $('.datetime').stop().animate({
             right: '-220px'
@@ -296,10 +291,9 @@ $(document).ready(function () {
             right: 0
         }, 200);
     });
-    
-    
+
     $('span#watch').click();
-    
+
     drawTimer(0, pomodoriTime);
 
     if(isNodeWebkit) {
@@ -311,7 +305,7 @@ $(document).ready(function () {
     require("d3")
     require("cal-heatmap");
     var calendar_opeb = new CalHeatMap();
-    
+
     calendar_opeb.init({
         start: new Date("2016/02"),
         domain: "month",
@@ -330,7 +324,7 @@ $(document).ready(function () {
         //subDomainTextFormat: "%d"
     });
 */
-  
+
 });
 
 
