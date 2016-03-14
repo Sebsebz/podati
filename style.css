@@ -6,7 +6,9 @@ body {
     height:85px;
     overflow:hidden;
     width:220px;
+    margin: 0px;
 }
+
 .pomodoro {
     height:85px;
     overflow:hidden;
@@ -58,7 +60,7 @@ body {
 
 .date {
     -webkit-app-region: no-drag;
-    color:black;   
+    color:black;
     left: 195px;
     position: absolute;
     top: 55px;
@@ -74,19 +76,19 @@ body {
 }
 
 .pomodori1 {
-    left: 5px;    
+    left: 5px;
     top:  60px;
 }
 .pomodori2 {
-    left: 20px;    
+    left: 20px;
     top:  60px;
 }
 .pomodori3 {
-    left: 35px;    
+    left: 35px;
     top:  60px;
 }
 .pomodori4 {
-    left: 50px;    
+    left: 50px;
     top: 60px;
 }
 .pomodori5 {
@@ -117,41 +119,6 @@ body {
 .counter2 {
     -webkit-app-region: drag;
     left: 0;
-    position: absolute;
-    top: 0;
-}
-
-/* configuration inputs */
-.text-input-xs
-{
-    -webkit-app-region: drag;
-    font-size: 10px;
-    height: 22px;
-    padding: 1px 5px;
-    width: 75px;
-}
-
-.input-xs
-{
-    -webkit-app-region: no-drag;
-    font-size: 10px;
-    height: 22px;
-    padding: 0 10px 0 5px;
-    text-align: center;
-    width: 50px;
-}
-
-.units-input-xs
-{
-    -webkit-app-region: drag;
-    font-size: 10px;
-    height: 22px;
-    padding: 1px 5px;
-    width: 20px;
-}
-.btn-save {
-    -webkit-app-region: no-drag;
-    left: 150px;
     position: absolute;
     top: 0;
 }
