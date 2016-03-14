@@ -222,6 +222,7 @@ function stopWatch() {
         if (isWorkingTime === true) {
             isWorkingTime = false;
             currentPomodori = currentPomodori + 1;
+            writePomodoro();
         } else {
             isWorkingTime = true;
         }
