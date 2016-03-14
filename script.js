@@ -347,17 +347,9 @@ $(document).ready(function () {
     $('input[name=shortBreakTime]').val(shortBreakTime / 60);
     $('input[name=workTime]').val(pomodoriTime / 60);
 
-    $('div#saveConf').click(function (e) {
-        longBreakTime  = $('input[name=longBreakTime]').val() * 60;
-        shortBreakTime = $('input[name=shortBreakTime]').val() * 60;
-        pomodoriTime   = $('input[name=workTime]').val() * 60;
-
-        config.time.longBreakTime   = longBreakTime;
-        config.time.shortBreakTime  = shortBreakTime;
-        config.time.pomodoriTime    = pomodoriTime;
-
-        fs.writeFileSync(configFile, ini.stringify(config));
-    });
+    $('#workTime').text("Work Time : " + $('input[name=workTime]').val() + "\'");
+    $('#shortBreakTime').text("Short Breaks : " + $('input[name=shortBreakTime]').val() + "\'");
+    $('#longBreakTime').text("Long Breaks : " + $('input[name=longBreakTime]').val() + "\'");
 
     $('.quit').click(function (e) {
         var win = require('nw.gui').Window.get();
@@ -436,6 +428,12 @@ $(document).ready(function () {
     });
 
     $('span#pomodoro').click(function () {
+
+        config = ini.parse(fs.readFileSync(configFile, 'utf-8'));
+        longBreakTime  = config.time.longBreakTime;
+        shortBreakTime = config.time.shortBreakTime;
+        pomodoriTime   = config.time.pomodoriTime;
+
         $('.datetime').stop().animate({
             right: '-220px'
         }, 200);

@@ -1,5 +1,7 @@
 /*jslint browser: true, devel: true, node: true*/
 /*global $, jQuery, alert*/
+var fs  = require('fs');
+var ini = require('ini');
 
 /****************
  *  Range Input  *
@@ -24,7 +26,7 @@ $(document).ready(function () {
 
     $(document).on('change', range_type, function (e) {
         var thumb = $(this).siblings('.thumb');
-        thumb.find('.value').html($(this).val());
+        thumb.find('.value').html($(this).val() + "\'");
     });
 
     $(document).on('input mousedown touchstart', range_type, function (e) {
@@ -37,7 +39,7 @@ $(document).ready(function () {
         }
 
         // Set indicator value
-        thumb.find('.value').html($(this).val());
+        thumb.find('.value').html($(this).val() + "\'");
 
         range_mousedown = true;
         $(this).addClass('active');
@@ -65,7 +67,7 @@ $(document).ready(function () {
             thumb.addClass('active').css('left', left);
         }
 
-        thumb.find('.value').html($(this).val());
+        thumb.find('.value').html($(this).val() + "\'");
     });
 
     $(document).on('mouseup touchend', range_wrapper, function () {
@@ -96,7 +98,7 @@ $(document).ready(function () {
                 left = width;
             }
             thumb.addClass('active').css('left', left);
-            thumb.find('.value').html(thumb.siblings(range_type).val());
+            thumb.find('.value').html(thumb.siblings(range_type).val() + "\'");
         }
     });
 
@@ -151,5 +153,23 @@ $(document).ready(function () {
             }
             $('#nav-config-up')[0].setAttribute("class", 'fa fa-caret-up fa-lg nav-config');
         }
+    });
+
+    $('div#saveConf').click(function (e) {
+        var configFile = 'configFile.ini',
+            config = ini.parse(fs.readFileSync(configFile, 'utf-8')),
+            l_longBreakTime  = $('input[name=longBreakTime]').val() * 60,
+            l_shortBreakTime = $('input[name=shortBreakTime]').val() * 60,
+            l_pomodoriTime   = $('input[name=workTime]').val() * 60;
+
+        config.time.longBreakTime   =  l_longBreakTime;
+        config.time.shortBreakTime  =  l_shortBreakTime;
+        config.time.pomodoriTime    =  l_pomodoriTime;
+
+        $('#workTime').text("Work Time : " + $('input[name=workTime]').val() + "\'");
+        $('#shortBreakTime').text("Short Breaks : " + $('input[name=shortBreakTime]').val() + "\'");
+        $('#longBreakTime').text("Long Breaks : " + $('input[name=longBreakTime]').val() + "\'");
+
+        fs.writeFileSync(configFile, ini.stringify(config));
     });
 });

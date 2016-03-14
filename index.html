@@ -23,7 +23,7 @@
             <canvas class="counter2" id="myCanvas2" width="125" height="75"></canvas>
 
             <span class="fa fa-play-circle startstop fa-4x" id="watch" value="Stop"></span>
-            <span class="fa fa-times-circle quit fa-lg"></span>
+            <span class="fa fa-times       quit fa-lg"></span>
 
             <span class="fa fa-gear     conf fa-lg" id="conf"></span>
             <span class="fa fa-calendar date fa-lg" id="calendar"></span>
@@ -52,15 +52,15 @@
             <div id="saveConf" class="fa fa-floppy-o fa-lg"></div>
             <form action="#" class="range-group">
                 <p class="range-field config_worktime">
-                    <span class="range-label">Work Time</span>
+                    <span id="workTime" class="range-label">Work Time : </span>
                     <input type="range" name="workTime" min="1" max="59" />
                 </p>
                 <p class="range-field config_shortBreakTime">
-                    <span class="range-label">Short Breaks</span>
+                    <span id="shortBreakTime" class="range-label">Short Breaks : </span>
                     <input type="range" name="shortBreakTime" min="1" max="59" />
                 </p>
                 <p class="range-field config_longBreakTime">
-                    <span class="range-label">Long Breaks</span>
+                    <span id="longBreakTime" class="range-label">Long Breaks : </span>
                     <input type="range" name="longBreakTime" min="1" max="59" />
                 </p>
             </form>
