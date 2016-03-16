@@ -23,10 +23,10 @@
             <canvas class="counter2" id="myCanvas2" width="125" height="75"></canvas>
 
             <span class="fa fa-play-circle startstop fa-4x" id="watch" value="Stop"></span>
-            <span class="fa fa-times       quit fa-lg"></span>
 
-            <span class="fa fa-gear     conf fa-lg" id="conf"></span>
-            <span class="fa fa-calendar date fa-lg" id="calendar"></span>
+            <span class="bt-ctrl fa fa-times    quit fa-lg"></span>
+            <span class="bt-ctrl fa fa-cogs     conf fa-lg" id="conf"></span>
+            <span class="bt-ctrl fa fa-calendar calheatmap fa-lg" id="calendar"></span>
 
             <span class="fa fa-circle-o pomodori pomodori1"></span>
             <span class="fa fa-circle-o pomodori pomodori2"></span>
@@ -39,17 +39,16 @@
         </div>
 
         <div class="datetime">
-            <span class="fa fa-clock-o fa-lg date" id="pomodoro"></span>
+            <div class="bt-ctrl fa fa-share fa-lg date" id="pomodoro_calheatmap"></div>
             <div id="calheatmap"></div>
         </div>
 
         <div class="config">
-            <div id="saveConf" class="fa fa-floppy-o fa-lg"></div>
-            <span class="fa fa-clock-o fa-lg date" id="pomodoro"></span>
-            <div id="saveConf" class="fa fa-floppy-o fa-lg"></div>
+            <div class="bt-ctrl fa fa-floppy-o fa-lg" id="saveConf"></div>
+            <div class="bt-ctrl fa fa-share fa-lg date" id="pomodoro_config"></div>
             <div class="range-groups">
                 <div class="range-group">
-                    <div class="icon-config fa fa-keyboard-o"></div>
+                    <div class="icon-config fa fa-desktop"></div>
                     <form action="#" class="range-slide">
                         <p class="range-field config_worktime">
                             <input class="icon-slide" type="range" name="workTime" min="1" max="59" />
@@ -67,7 +66,7 @@
                     <div id="shortBreakTime" class="icon-value"></div>
                 </div>
                 <div class="range-group">
-                    <div class="icon-config fa fa-futbol-o"></div>
+                    <div class="icon-config fa fa-gamepad"></div>
                     <form action="#" class="range-slide">
                         <p class="range-field config_longBreakTime">
                             <input class="icon-slide" type="range" name="longBreakTime" min="1" max="59" />

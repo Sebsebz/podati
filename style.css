@@ -12,8 +12,9 @@ body {
 .pomodoro {
     height:85px;
     overflow:hidden;
-    position:relative;
+    position:absolute;
     width:220px;
+    height: 100%;
 }
 
 /* Views */
@@ -23,13 +24,7 @@ body {
     right:-220px;
     top:0;
     width:220px;
-}
-.config {
-    height:85px;
-    position:absolute;
-    right:-220px;
-    top:0;
-    width:220px;
+    height: 100%;
 }
 
 /* Start/Stop/Pause Bouton */
@@ -42,28 +37,40 @@ body {
 }
 
 /* Boutons */
-.conf {
+.bt-ctrl {
     -webkit-app-region: no-drag;
     color:black;
-    left: 195px;
     position: absolute;
-    top: 32px;
+}
+
+.conf {
+    left: 195px;
+    top: 50%;
+
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .quit {
-    -webkit-app-region: no-drag;
-    color:black;
     left: 195px;
-    position: absolute;
     top: 12px;
 }
 
-.date {
-    -webkit-app-region: no-drag;
-    color:black;
+.calheatmap {
     left: 195px;
-    position: absolute;
-    top: 55px;
+    bottom: 12px;
+}
+
+.date {
+    left: 195px;
+    bottom: 12px;
+
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
 }
 
 /* pomodori indicator */

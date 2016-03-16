@@ -434,7 +434,25 @@ $(document).ready(function () {
         }, 200);
     });
 
-    $('span#pomodoro').click(function () {
+    $('div#pomodoro_config').click(function () {
+
+        config = ini.parse(fs.readFileSync(configFile, 'utf-8'));
+        longBreakTime  = config.time.longBreakTime;
+        shortBreakTime = config.time.shortBreakTime;
+        pomodoriTime   = config.time.pomodoriTime;
+
+        $('.datetime').stop().animate({
+            right: '-220px'
+        }, 200);
+        $('.config').stop().animate({
+            right: '-220px'
+        }, 200);
+        $('.pomodoro').stop().animate({
+            right: 0
+        }, 200);
+    });
+
+    $('div#pomodoro_calheatmap').click(function () {
 
         config = ini.parse(fs.readFileSync(configFile, 'utf-8'));
         longBreakTime  = config.time.longBreakTime;

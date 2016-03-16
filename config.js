@@ -12,6 +12,7 @@ $(document).ready(function () {
     var range_type = 'input[type=range]',
         range_mousedown = false,
         left,
+        prev_value,
         range_wrapper = '.range-field';
 
     $(range_type).each(function () {
@@ -36,14 +37,18 @@ $(document).ready(function () {
         // Set indicator value
         thumb.find('.value').html($(this).val() + "\'");
 
+        // Memo value to check a change
+        prev_value = $(this).val();
+
         range_mousedown = true;
         $(this).addClass('active');
+        $(this).removeClass('changed');
 
         if (!thumb.hasClass('active')) {
             thumb.stop().animate({
                 height: "30px",
                 width: "30px",
-                top: "5px",
+                top: "-4px",
                 marginLeft: "-15px"
             }, 300, "linear");
         }
@@ -68,6 +73,9 @@ $(document).ready(function () {
     $(document).on('mouseup touchend', range_wrapper, function () {
         range_mousedown = false;
         $(this).removeClass('active');
+        if (prev_value != $(this).val()) {
+            $(this).addClass('changed');
+        }
     });
 
     $(document).on('mousemove touchmove', range_wrapper, function (e) {
@@ -77,7 +85,7 @@ $(document).ready(function () {
                 thumb.stop().animate({
                     height: "30px",
                     width: "30px",
-                    top: "5px",
+                    top: "-4px",
                     marginLeft: "-15px"
                 }, 300, "linear");
             }
@@ -113,6 +121,9 @@ $(document).ready(function () {
                 });
             }
             thumb.removeClass('active');
+            if (prev_value != $(this).val()) {
+                $(this).addClass('changed');
+            }
         }
     });
 

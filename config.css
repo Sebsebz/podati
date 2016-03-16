@@ -1,4 +1,12 @@
 /* configuration inputs */
+.config {
+    height:85px;
+    position:absolute;
+    right:-220px;
+    top:0;
+    width:220px;
+    height: 100%;
+}
 
 .range-label {
     width: 100%;
@@ -25,8 +33,11 @@
 }
 
 .range-groups {
+    -webkit-app-region: no-drag;
     position: absolute;
     width: 180px;
+    top:7px;
+    left: 5px;
 }
 
 .range-group {
@@ -37,16 +48,22 @@
 
 .icon-config {
     -webkit-app-region: drag;
-    color:black;
+
     display:inline-block;
-    font-size: 16px;
     float: left;
+    width: 20px;
+    margin-top: 5px;
+
+    color:black;
+    font-size: 16px;
 }
 .icon-value {
     -webkit-app-region: drag;
+
     display:inline-block;
     float: right;
     width: 20px;
+    margin-top: 2px;
 
     font-family: sans-serif;
     font-weight: bold;
@@ -117,6 +134,10 @@ input[type=range] + .thumb.active .value {
     font-weight: bold;
 }
 
+.changed::input[type=range]::-webkit-slider-runnable-track {
+    background: rgb(180, 95, 23);
+}
+
 input[type=range]:focus {
     outline: none;
 }
@@ -146,7 +167,6 @@ input[type=range]::-webkit-slider-thumb {
 
 input[type=range]:focus::-webkit-slider-runnable-track {
     /*  background: #cccccc;*/
-    background: rgba(255, 35, 38, 0.74);
 }
 
 input[type=range] {
