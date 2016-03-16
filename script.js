@@ -24,6 +24,13 @@ var ratioLongBreak = 4;
 var isWorkingTime = true;
 
 
+        $('.config').stop().animate({
+            right: 0
+        }, 200);
+        $('.pomodoro').stop().animate({
+            right: '-220px'
+        }, 200);
+
 /**
  * Returns the week number for this date.  dowOffset is the day of week the week
  * "starts" on for your locale - it can be from 0 to 6. If dowOffset is 1 (Monday),
@@ -347,9 +354,9 @@ $(document).ready(function () {
     $('input[name=shortBreakTime]').val(shortBreakTime / 60);
     $('input[name=workTime]').val(pomodoriTime / 60);
 
-    $('#workTime').text("Work Time : " + $('input[name=workTime]').val() + "\'");
-    $('#shortBreakTime').text("Short Breaks : " + $('input[name=shortBreakTime]').val() + "\'");
-    $('#longBreakTime').text("Long Breaks : " + $('input[name=longBreakTime]').val() + "\'");
+    $('#workTime').text($('input[name=workTime]').val() + "\'");
+    $('#shortBreakTime').text($('input[name=shortBreakTime]').val() + "\'");
+    $('#longBreakTime').text($('input[name=longBreakTime]').val() + "\'");
 
     $('.quit').click(function (e) {
         var win = require('nw.gui').Window.get();

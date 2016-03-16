@@ -1,20 +1,5 @@
 /* configuration inputs */
-.nav-config {
-    -webkit-app-region: no-drag;
-    color:black;
-    position: absolute;
-}
-.nav-config-limit {
-    visibility: hidden;
-}
-#nav-config-up {
-    left: 5px;
-    top: 5px;
-}
-#nav-config-down {
-    left: 5px;
-    bottom: 5px;
-}
+
 .range-label {
     font-size: 15px;
     height: 22px;
@@ -23,11 +8,6 @@
     font-weight: bold;
     color:black;
     position: relative;
-    top: 25px;
-}
-
-.nav-config {
-    position: absolute;
 }
 
 #saveConf {
@@ -37,22 +17,42 @@
     position: absolute;
     top: 12px;
 }
+
 .range-field {
     -webkit-app-region: drag;
 }
+
 .range-group {
     position: absolute;
-    left: 20px;
-    width: 165px;
+    left: 5px;
+    width: 180px;
+    top: 2px;
 }
 
+.icon-config {
+    color:black;
+    display:inline-block;
+    width: 10%;
+    font-size: 16px;
+}
+.icon-slide {
+    color:black;
+    display:inline-block;
+    width: 150px;
+}
+.icon-config {
+    -webkit-app-region: drag;
+}
+
+p {
+}
 
 /***************
 Range
 ***************/
 .range-field {
     position: relative;
-    height: 85px;
+    height: 30px;
     margin: 0px;
 }
 
@@ -67,7 +67,7 @@ input[type=range] {
     border: none;
     outline: none;
     width: 100%;
-    margin: 30px 0px 20px 0px;
+    margin: 0px;
     padding: 0;
 }
 
@@ -97,7 +97,7 @@ input[type=range] + .thumb .value {
 }
 
 input[type=range] + .thumb.active {
-    border-radius: 50% 50% 50% 0;
+    border-radius: 0% 50% 0% 50%;
 }
 
 input[type=range] + .thumb.active .value {

@@ -12,12 +12,7 @@ $(document).ready(function () {
     var range_type = 'input[type=range]',
         range_mousedown = false,
         left,
-        range_wrapper = '.range-field',
-        config_page = 1;
-
-
-    $('#nav-config-up')[0].setAttribute("class", 'fa fa-caret-up fa-lg nav-config nav-config-limit');
-    $('#nav-config-down')[0].setAttribute("class", 'fa fa-caret-down fa-lg nav-config');
+        range_wrapper = '.range-field';
 
     $(range_type).each(function () {
         var thumb = $('<span class="thumb"><span class="value"></span></span>');
@@ -121,40 +116,6 @@ $(document).ready(function () {
         }
     });
 
-    $('#nav-config-up').click(function () {
-        if (config_page > 1) {
-            $('.range-group').stop().animate({
-                top: "-" + (config_page - 1) * 85 + "px"
-            }, 200);
-            config_page -= 1;
-            $('.range-group').stop().animate({
-                top: "-" + (config_page - 1) * 85 + "px"
-            }, 200);
-
-            if (config_page === 1) {
-                $('#nav-config-up')[0].setAttribute("class", 'fa fa-caret-up fa-lg nav-config nav-config-limit');
-            }
-            $('#nav-config-down')[0].setAttribute("class", 'fa fa-caret-down fa-lg nav-config');
-        }
-    });
-
-    $('#nav-config-down').click(function () {
-        if (config_page < 3) {
-            $('.range-group').stop().animate({
-                top: "-" + (config_page - 1) * 85 + "px"
-            }, 200);
-            config_page += 1;
-            $('.range-group').stop().animate({
-                top: "-" + (config_page - 1) * 85 + "px"
-            }, 200);
-
-            if (config_page === 3) {
-                $('#nav-config-down')[0].setAttribute("class", 'fa fa-caret-down fa-lg nav-config nav-config-limit');
-            }
-            $('#nav-config-up')[0].setAttribute("class", 'fa fa-caret-up fa-lg nav-config');
-        }
-    });
-
     $('div#saveConf').click(function (e) {
         var configFile = 'configFile.ini',
             config = ini.parse(fs.readFileSync(configFile, 'utf-8')),
@@ -166,9 +127,9 @@ $(document).ready(function () {
         config.time.shortBreakTime  =  l_shortBreakTime;
         config.time.pomodoriTime    =  l_pomodoriTime;
 
-        $('#workTime').text("Work Time : " + $('input[name=workTime]').val() + "\'");
-        $('#shortBreakTime').text("Short Breaks : " + $('input[name=shortBreakTime]').val() + "\'");
-        $('#longBreakTime').text("Long Breaks : " + $('input[name=longBreakTime]').val() + "\'");
+        $('#workTime').text($('input[name=workTime]').val() + "\'");
+        $('#shortBreakTime').text($('input[name=shortBreakTime]').val() + "\'");
+        $('#longBreakTime').text($('input[name=longBreakTime]').val() + "\'");
 
         fs.writeFileSync(configFile, ini.stringify(config));
     });
