@@ -47,39 +47,35 @@
             <div id="saveConf" class="fa fa-floppy-o fa-lg"></div>
             <span class="fa fa-clock-o fa-lg date" id="pomodoro"></span>
             <div id="saveConf" class="fa fa-floppy-o fa-lg"></div>
-            <form action="#" class="range-group">
-               .
-                <p class="range-field config_worktime">
+            <div class="range-groups">
+                <div class="range-group">
                     <div class="icon-config fa fa-keyboard-o"></div>
-                    <input class="icon-slide" type="range" name="workTime" min="1" max="59" />
-                    <div id="workTime" class="range-label icon-config"></div>
-                </p>
-                <p class="range-field config_shortBreakTime">
-                    <span class="icon-config fa fa-coffee"></span>
-                    <input class="icon-slide" type="range" name="shortBreakTime" min="1" max="59" />
-                    <span id="shortBreakTime" class="range-label icon-config"></span>
-                </p>
-                <p class="range-field config_longBreakTime">
-                    <span class="icon-config fa fa-futbol-o"></span>
-                    <input class="icon-slide" type="range" name="longBreakTime" min="1" max="59" />
-                    <span id="longBreakTime" class="range-label icon-config"></span>
-                </p>
-                <!--p class="range-field config_worktime">
-                    <div class="icon-config fa fa-keyboard-o"></div>
-                    <div class="icon-slide"><input type="range" name="workTime" min="1" max="59" /></div>
-                    <span id="workTime" class="range-label icon-config"></span>
-                </p>
-                <p class="range-field config_shortBreakTime">
+                    <form action="#" class="range-slide">
+                        <p class="range-field config_worktime">
+                            <input class="icon-slide" type="range" name="workTime" min="1" max="59" />
+                        </p>
+                    </form>
+                    <div id="workTime" class="icon-value"></div>
+                </div>
+                <div class="range-group">
                     <div class="icon-config fa fa-coffee"></div>
-                    <div class="icon-slide"><input type="range" name="shortBreakTime" min="1" max="59" /></div>
-                    <div id="shortBreakTime" class="range-label icon-config"></div>
-                </p>
-                <p class="range-field config_longBreakTime">
+                    <form action="#" class="range-slide">
+                        <p class="range-field config_shortBreakTime">
+                            <input class="icon-slide" type="range" name="shortBreakTime" min="1" max="59" />
+                        </p>
+                    </form>
+                    <div id="shortBreakTime" class="icon-value"></div>
+                </div>
+                <div class="range-group">
                     <div class="icon-config fa fa-futbol-o"></div>
-                    <div class="icon-slide"><input type="range" name="longBreakTime" min="1" max="59" /></div>
-                    <div id="longBreakTime" class="range-label icon-config"></div>
-                </p-->
-            </form>
+                    <form action="#" class="range-slide">
+                        <p class="range-field config_longBreakTime">
+                            <input class="icon-slide" type="range" name="longBreakTime" min="1" max="59" />
+                        </p>
+                    </form>
+                    <div id="longBreakTime" class="icon-value"></div>
+                </div>
+            </div>
         </div>
 
         <!-- JavaScript

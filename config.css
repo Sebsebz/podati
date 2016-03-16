@@ -1,9 +1,9 @@
 /* configuration inputs */
 
 .range-label {
-    font-size: 15px;
-    height: 22px;
     width: 100%;
+    height: 22px;
+    font-size: 15px;
     font-family: sans-serif;
     font-weight: bold;
     color:black;
@@ -20,42 +20,50 @@
 
 .range-field {
     -webkit-app-region: drag;
+    position: relative;
+    margin: 0px;
+}
+
+.range-groups {
+    position: absolute;
+    width: 180px;
 }
 
 .range-group {
-    position: absolute;
-    left: 5px;
-    width: 180px;
-    top: 2px;
+    position: relative;
+    width: 100%;
+    height: 30px;
 }
 
 .icon-config {
+    -webkit-app-region: drag;
     color:black;
     display:inline-block;
-    width: 10%;
+    font-size: 16px;
+    float: left;
+}
+.icon-value {
+    -webkit-app-region: drag;
+    display:inline-block;
+    float: right;
+    width: 20px;
+
+    font-family: sans-serif;
+    font-weight: bold;
+    color:black;
     font-size: 16px;
 }
 .icon-slide {
     color:black;
     display:inline-block;
-    width: 150px;
 }
-.icon-config {
-    -webkit-app-region: drag;
-}
-
-p {
+form {
+    display: inline-block;
 }
 
 /***************
 Range
 ***************/
-.range-field {
-    position: relative;
-    height: 30px;
-    margin: 0px;
-}
-
 input[type=range], input[type=range] + .thumb {
     cursor: pointer;
 }
@@ -66,9 +74,9 @@ input[type=range] {
     background-color: transparent;
     border: none;
     outline: none;
-    width: 100%;
+    width: auto;
     margin: 0px;
-    padding: 0;
+    padding: 10px 0px 0px 5px;
 }
 
 input[type=range] + .thumb {
