@@ -1,3 +1,7 @@
+/*jslint browser: true, node: true*/
+/*global $, jQuery, alert*/
+var fs  = require('fs');
+
 /** 
  * Get the ISO week date week number 
  */
@@ -5,11 +9,9 @@ Date.prototype.getWeek = function () {
     'use strict';
 
     // Create a copy of this date object
-    var target  = new Date(this.valueOf());
-  
-    // ISO week date weeks start on monday
-    // so correct the day number
-    var dayNr   = (this.getDay() + 6) % 7;
+    var target  = new Date(this.valueOf()),
+        dayNr   = (this.getDay() + 6) % 7,
+        firstThursday;
   
     // ISO 8601 states that week 1 is the week
     // with the first thursday of that year.
@@ -17,7 +19,7 @@ Date.prototype.getWeek = function () {
     target.setDate(target.getDate() - dayNr + 3);
   
     // Store the millisecond value of the target date
-    var firstThursday = target.valueOf();
+    firstThursday = target.valueOf();
   
     // Set the target to the first thursday of the year
     // First set the target to january first
@@ -32,57 +34,6 @@ Date.prototype.getWeek = function () {
     return 1 + Math.ceil((firstThursday - target) / 604800000); // 604800000 = 7 * 24 * 3600 * 1000
 };
 
-function readPomodoro() {
-    'use strict';
-
-    var dbPomodoro;
-
-    $.ajax({
-        url: './pomodoro.json',
-        dataType: 'json',
-        success: function (dbPomodoro) {
-            updateCalHeatMap(dbPomodoro);
-        },
-        error: function (dbPomodoro) {
-        }
-    });
-}
-
-function writePomodoro() {
-    'use strict';
-
-    var dbPomodoro;
-
-    $.ajax({
-        url: './pomodoro.json',
-        dataType: 'json',
-        success: function (dbPomodoro) {
-            var today   = new Date(),
-                dateKey =          today.getFullYear()
-                          + "/" + (today.getMonth() + 1)
-                          + "/" + today.getDate();
-
-            if (typeof dbPomodoro[dateKey] !== 'undefined') {
-                dbPomodoro[dateKey] = dbPomodoro[dateKey] + 1;
-            } else {
-                dbPomodoro[dateKey] = 1;
-            }
-
-            fs.writeFile("./pomodoro.json",
-                         JSON.stringify(dbPomodoro, null, 4), function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-
-                    console.log("The file was saved!");
-                });
-
-            updateCalHeatMap(dbPomodoro);
-        },
-        error: function (dbPomodoro) {
-        }
-    });
-}
  
 function updateCalHeatMap(dbPomodoro) {
     'use strict';
@@ -168,4 +119,56 @@ function updateCalHeatMap(dbPomodoro) {
         }
 
     } while (myDate.getTime() < endDate.getTime());
+}
+
+function readPomodoro() {
+    'use strict';
+
+    var dbPomodoro;
+
+    $.ajax({
+        url: './pomodoro.json',
+        dataType: 'json',
+        success: function (dbPomodoro) {
+            updateCalHeatMap(dbPomodoro);
+        },
+        error: function (dbPomodoro) {
+        }
+    });
+}
+
+function writePomodoro() {
+    'use strict';
+
+    var dbPomodoro;
+
+    $.ajax({
+        url: './pomodoro.json',
+        dataType: 'json',
+        success: function (dbPomodoro) {
+            var today   = new Date(),
+                dateKey =          today.getFullYear()
+                          + "/" + (today.getMonth() + 1)
+                          + "/" + today.getDate();
+
+            if (typeof dbPomodoro[dateKey] !== 'undefined') {
+                dbPomodoro[dateKey] = dbPomodoro[dateKey] + 1;
+            } else {
+                dbPomodoro[dateKey] = 1;
+            }
+
+            fs.writeFile("./pomodoro.json",
+                         JSON.stringify(dbPomodoro, null, 4), function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+
+                    console.log("The file was saved!");
+                });
+
+            updateCalHeatMap(dbPomodoro);
+        },
+        error: function (dbPomodoro) {
+        }
+    });
 }
