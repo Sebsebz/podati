@@ -98,6 +98,11 @@ form {
 /***************
 Range
 ***************/
+span.thumb {
+    width: 1px;
+    height: 1px;
+}
+
 input[type=range] {
     -webkit-appearance: none;
 }
@@ -120,12 +125,13 @@ input[type=range] {
 input[type=range] + .thumb {
     position: absolute;
     border: none;
-    height: 0;
-    width: 0;
+    height: 0px;
+    width: 0px;
     border-radius: 50%;
     background-color: rgb(195, 39, 41);
-    top: 10px;
-    margin-left: -6px;
+    top: 0;
+    margin-top: 4px;
+    margin-left: -1px;
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
     -webkit-transform: rotate(-45deg);
@@ -144,6 +150,10 @@ input[type=range] + .thumb .value {
 
 input[type=range] + .thumb.active {
     border-radius: 0% 50% 0% 50%;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: translateX(-15px);
+    transform: translateX(-15px);
 }
 
 input[type=range] + .thumb.active .value {
@@ -165,11 +175,11 @@ input[type=range]::-webkit-slider-runnable-track {
     background: #000;
     border: none;
 }
-/*
-.changed>input[type=range]::-webkit-slider-runnable-track {
+
+.changed input[type=range]::-webkit-slider-runnable-track {
     background: rgb(180, 95, 23);
 }
-*/
+
 
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;

@@ -18,6 +18,12 @@ $(document).ready(function () {
     $(range_type).each(function () {
         var thumb = $('<span class="thumb"><span class="value"></span></span>');
         $(this).after(thumb);
+
+        thumb.css({
+            height: "0px",
+            width: "0px",
+            top: "50%"
+        });
     });
 
     $(document).on('change', range_type, function (e) {
@@ -49,8 +55,7 @@ $(document).ready(function () {
             thumb.stop().animate({
                 height: "30px",
                 width: "30px",
-                top: "-2px",
-                marginLeft: "-15px"
+                top: "-50%"
             }, 300, "linear");
         }
 
@@ -85,9 +90,7 @@ $(document).ready(function () {
             if (!thumb.hasClass('active')) {
                 thumb.stop().animate({
                     height: "30px",
-                    width: "30px",
-                    top: "-3px",
-                    marginLeft: "-15px"
+                    width: "30px"
                 }, 300, "linear");
             }
             if (e.pageX === undefined || e.pageX === null) { //mobile
@@ -115,16 +118,12 @@ $(document).ready(function () {
                 thumb.stop().animate({
                     height: "0px",
                     width: "0px",
-                    top: "0px",
-                    marginleft: "-6px"
+                    top: "50%"
                 }, {
                     duration: 100
                 });
             }
             thumb.removeClass('active');
-            if (prev_value != $(this).val()) {
-                $(this).addClass('changed');
-            }
         }
     });
 
