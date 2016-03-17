@@ -26,7 +26,8 @@ $(document).ready(function () {
     });
 
     $(document).on('input mousedown touchstart', range_type, function (e) {
-        var thumb = $(this).siblings('.thumb'), width = $(this).outerWidth();
+        var thumb = $(this).siblings('.thumb'),
+            width = $(this).outerWidth();
 
         // If thumb indicator does not exist yet, create it
         if (thumb.length <= 0) {
@@ -48,7 +49,7 @@ $(document).ready(function () {
             thumb.stop().animate({
                 height: "30px",
                 width: "30px",
-                top: "-4px",
+                top: "-2px",
                 marginLeft: "-15px"
             }, 300, "linear");
         }
@@ -85,7 +86,7 @@ $(document).ready(function () {
                 thumb.stop().animate({
                     height: "30px",
                     width: "30px",
-                    top: "-4px",
+                    top: "-3px",
                     marginLeft: "-15px"
                 }, 300, "linear");
             }
@@ -138,9 +139,9 @@ $(document).ready(function () {
         config.time.shortBreakTime  =  l_shortBreakTime;
         config.time.pomodoriTime    =  l_pomodoriTime;
 
-        $('#workTime').text($('input[name=workTime]').val() + "\'");
-        $('#shortBreakTime').text($('input[name=shortBreakTime]').val() + "\'");
-        $('#longBreakTime').text($('input[name=longBreakTime]').val() + "\'");
+        $('#workTime').text(get2D( $('input[name=workTime]').val() ) + "\'");
+        $('#shortBreakTime').text(get2D( $('input[name=shortBreakTime]').val() ) + "\'");
+        $('#longBreakTime').text(get2D( $('input[name=longBreakTime]').val() ) + "\'");
 
         fs.writeFileSync(configFile, ini.stringify(config));
     });

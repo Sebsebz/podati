@@ -36,8 +36,13 @@
     -webkit-app-region: no-drag;
     position: absolute;
     width: 180px;
-    top:7px;
     left: 5px;
+
+    top:50%;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .range-group {
@@ -48,22 +53,34 @@
 
 .icon-config {
     -webkit-app-region: drag;
+    position: relative;
 
     display:inline-block;
     float: left;
     width: 20px;
-    margin-top: 5px;
+
+    top:50%;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
 
     color:black;
     font-size: 16px;
 }
 .icon-value {
     -webkit-app-region: drag;
+    position: relative;
 
     display:inline-block;
     float: right;
     width: 20px;
-    margin-top: 2px;
+
+    top:50%;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
 
     font-family: sans-serif;
     font-weight: bold;
@@ -81,6 +98,10 @@ form {
 /***************
 Range
 ***************/
+input[type=range] {
+    -webkit-appearance: none;
+}
+
 input[type=range], input[type=range] + .thumb {
     cursor: pointer;
 }
@@ -92,7 +113,7 @@ input[type=range] {
     border: none;
     outline: none;
     width: auto;
-    margin: 0px;
+    margin: 1px 0px 0px 0px;
     padding: 10px 0px 0px 5px;
 }
 
@@ -134,23 +155,21 @@ input[type=range] + .thumb.active .value {
     font-weight: bold;
 }
 
-.changed::input[type=range]::-webkit-slider-runnable-track {
-    background: rgb(180, 95, 23);
-}
-
 input[type=range]:focus {
     outline: none;
 }
 
-input[type=range] {
-    -webkit-appearance: none;
-}
-
 input[type=range]::-webkit-slider-runnable-track {
-    height: 3px;
+    margin: 2px 0 0 0;
+    height: 2px;
     background: #000;
     border: none;
 }
+/*
+.changed>input[type=range]::-webkit-slider-runnable-track {
+    background: rgb(180, 95, 23);
+}
+*/
 
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -161,7 +180,7 @@ input[type=range]::-webkit-slider-thumb {
     background-color: rgb(195, 39, 41);
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
-    margin: -5px 0 0 0;
+    margin: -6px 0 0 0;
     transition: .3s;
 }
 
