@@ -350,13 +350,6 @@ $(document).ready(function () {
     $('#shortBreakTime').text(get2D( $('input[name=shortBreakTime]').val() ) + "\'");
     $('#longBreakTime').text(get2D( $('input[name=longBreakTime]').val() ) + "\'");
 
-    $('.config').stop().animate({
-        right: 0
-    }, 200);
-    $('.pomodoro').stop().animate({
-        right: '-220px'
-    }, 200);
-
     $('.quit').click(function (e) {
         var win = require('nw.gui').Window.get();
         win.close();

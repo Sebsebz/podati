@@ -70,7 +70,7 @@ $(document).ready(function () {
             } else if (left > width) {
                 left = width;
             }
-            thumb.addClass('active').css('left', left);
+            thumb.addClass('active').css('left', left-14);
         }
 
         thumb.find('.value').html($(this).val() + "\'");
@@ -104,7 +104,7 @@ $(document).ready(function () {
             } else if (left > width) {
                 left = width;
             }
-            thumb.addClass('active').css('left', left);
+            thumb.addClass('active').css('left', left-14);
             thumb.find('.value').html(thumb.siblings(range_type).val() + "\'");
         }
     });
@@ -143,5 +143,7 @@ $(document).ready(function () {
         $('#longBreakTime').text(get2D( $('input[name=longBreakTime]').val() ) + "\'");
 
         fs.writeFileSync(configFile, ini.stringify(config));
+
+        $('.range-field').removeClass('changed');
     });
 });
