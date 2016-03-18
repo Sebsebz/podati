@@ -1,5 +1,5 @@
 /*jslint browser: true, node: true*/
-/*global $, jQuery, alert*/
+/*global $, jQuery, alert, writePomodoro, readPomodoro*/
 var ini        = require('ini');
 var fs         = require('fs');
 
@@ -229,9 +229,9 @@ $(document).ready(function () {
     $('input[name=shortBreakTime]').val(shortBreakTime / 60);
     $('input[name=workTime]').val(pomodoriTime / 60);
 
-    $('#workTime').text("Work Time : " + $('input[name=workTime]').val() + "\'");
-    $('#shortBreakTime').text("Short Breaks : " + $('input[name=shortBreakTime]').val() + "\'");
-    $('#longBreakTime').text("Long Breaks : " + $('input[name=longBreakTime]').val() + "\'");
+    $('#workTime').text(get2D($('input[name=workTime]').val()) + "\'");
+    $('#shortBreakTime').text(get2D($('input[name=shortBreakTime]').val()) + "\'");
+    $('#longBreakTime').text(get2D($('input[name=longBreakTime]').val()) + "\'");
 
     timerFinish  = pomodoriTime;
     timerCurrent = timerFinish;
@@ -304,7 +304,25 @@ $(document).ready(function () {
         }, 200);
     });
 
-    $('span#pomodoro').click(function () {
+    $('div#pomodoro_config').click(function () {
+
+        config = ini.parse(fs.readFileSync(configFile, 'utf-8'));
+        longBreakTime  = config.time.longBreakTime;
+        shortBreakTime = config.time.shortBreakTime;
+        pomodoriTime   = config.time.pomodoriTime;
+
+        $('.datetime').stop().animate({
+            right: '-220px'
+        }, 200);
+        $('.config').stop().animate({
+            right: '-220px'
+        }, 200);
+        $('.pomodoro').stop().animate({
+            right: 0
+        }, 200);
+    });
+
+    $('div#pomodoro_calheatmap').click(function () {
 
         config = ini.parse(fs.readFileSync(configFile, 'utf-8'));
         longBreakTime  = config.time.longBreakTime;

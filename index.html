@@ -23,10 +23,10 @@
             <canvas class="counter2" id="myCanvas2" width="125" height="75"></canvas>
 
             <span class="fa fa-play-circle startstop fa-4x" id="watch"></span>
-            <span class="fa fa-times       quit fa-lg"></span>
 
-            <span class="fa fa-gear     conf fa-lg" id="conf"></span>
-            <span class="fa fa-calendar date fa-lg" id="calendar"></span>
+            <span class="bt-ctrl fa fa-times    quit fa-lg"></span>
+            <span class="bt-ctrl fa fa-cogs     conf fa-lg" id="conf"></span>
+            <span class="bt-ctrl fa fa-calendar calheatmap fa-lg" id="calendar"></span>
 
             <span class="fa fa-circle-o pomodori pomodori1"></span>
             <span class="fa fa-circle-o pomodori pomodori2"></span>
@@ -39,31 +39,42 @@
         </div>
 
         <div class="datetime">
-            <span class="fa fa-clock-o fa-lg date" id="pomodoro"></span>
+            <div class="bt-ctrl fa fa-share fa-lg date" id="pomodoro_calheatmap"></div>
             <div id="calheatmap"></div>
         </div>
 
         <div class="config">
-            <div id="nav-config-up" class="fa fa-caret-up fa-lg nav-config"></div>
-            <div id="nav-config-down" class="fa fa-caret-down fa-lg nav-config"></div>
-            
-            <div id="saveConf" class="fa fa-floppy-o fa-lg"></div>
-            <span class="fa fa-clock-o fa-lg date" id="pomodoro"></span>
-            <div id="saveConf" class="fa fa-floppy-o fa-lg"></div>
-            <form action="#" class="range-group">
-                <p class="range-field config_worktime">
-                    <span id="workTime" class="range-label">Work Time : </span>
-                    <input type="range" name="workTime" min="1" max="59" />
-                </p>
-                <p class="range-field config_shortBreakTime">
-                    <span id="shortBreakTime" class="range-label">Short Breaks : </span>
-                    <input type="range" name="shortBreakTime" min="1" max="59" />
-                </p>
-                <p class="range-field config_longBreakTime">
-                    <span id="longBreakTime" class="range-label">Long Breaks : </span>
-                    <input type="range" name="longBreakTime" min="1" max="59" />
-                </p>
-            </form>
+            <div class="bt-ctrl fa fa-floppy-o fa-lg" id="saveConf"></div>
+            <div class="bt-ctrl fa fa-share fa-lg date" id="pomodoro_config"></div>
+            <div class="range-groups">
+                <div class="range-group">
+                    <div class="icon-config fa fa-desktop"></div>
+                    <form action="#" class="range-slide">
+                        <p class="range-field config_worktime">
+                            <input class="icon-slide" type="range" name="workTime" min="1" max="59" />
+                        </p>
+                    </form>
+                    <div id="workTime" class="icon-value"></div>
+                </div>
+                <div class="range-group">
+                    <div class="icon-config fa fa-coffee"></div>
+                    <form action="#" class="range-slide">
+                        <p class="range-field config_shortBreakTime">
+                            <input class="icon-slide" type="range" name="shortBreakTime" min="1" max="59" />
+                        </p>
+                    </form>
+                    <div id="shortBreakTime" class="icon-value"></div>
+                </div>
+                <div class="range-group">
+                    <div class="icon-config fa fa-gamepad"></div>
+                    <form action="#" class="range-slide">
+                        <p class="range-field config_longBreakTime">
+                            <input class="icon-slide" type="range" name="longBreakTime" min="1" max="59" />
+                        </p>
+                    </form>
+                    <div id="longBreakTime" class="icon-value"></div>
+                </div>
+            </div>
         </div>
 
         <!-- JavaScript

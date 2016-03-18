@@ -1,33 +1,21 @@
 /* configuration inputs */
-.nav-config {
-    -webkit-app-region: no-drag;
-    color:black;
-    position: absolute;
+.config {
+    height:85px;
+    position:absolute;
+    right:-220px;
+    top:0;
+    width:220px;
+    height: 100%;
 }
-.nav-config-limit {
-    visibility: hidden;
-}
-#nav-config-up {
-    left: 5px;
-    top: 5px;
-}
-#nav-config-down {
-    left: 5px;
-    bottom: 5px;
-}
+
 .range-label {
-    font-size: 15px;
-    height: 22px;
     width: 100%;
+    height: 22px;
+    font-size: 15px;
     font-family: sans-serif;
     font-weight: bold;
     color:black;
     position: relative;
-    top: 25px;
-}
-
-.nav-config {
-    position: absolute;
 }
 
 #saveConf {
@@ -37,23 +25,90 @@
     position: absolute;
     top: 12px;
 }
+
 .range-field {
     -webkit-app-region: drag;
-}
-.range-group {
-    position: absolute;
-    left: 20px;
-    width: 165px;
+    position: relative;
+    margin: 0px;
 }
 
+.range-groups {
+    -webkit-app-region: no-drag;
+    position: absolute;
+    width: 180px;
+    left: 5px;
+
+    top:50%;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.range-group {
+    position: relative;
+    width: 100%;
+    height: 30px;
+}
+
+.icon-config {
+    -webkit-app-region: drag;
+    position: relative;
+
+    display:inline-block;
+    float: left;
+    width: 20px;
+
+    top:50%;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+    color:black;
+    font-size: 16px;
+}
+.icon-value {
+    -webkit-app-region: drag;
+    position: relative;
+
+    display:inline-block;
+    float: right;
+    width: 20px;
+
+    top:50%;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+    font-family: sans-serif;
+    font-weight: bold;
+    color:black;
+    font-size: 16px;
+
+    z-index: 1;
+}
+.icon-slide {
+    color:black;
+    display:inline-block;
+}
+form {
+    display: inline-block;
+
+    z-index: 2;
+}
 
 /***************
 Range
 ***************/
-.range-field {
-    position: relative;
-    height: 85px;
-    margin: 0px;
+span.thumb {
+    width: 1px;
+    height: 1px;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
 }
 
 input[type=range], input[type=range] + .thumb {
@@ -66,20 +121,21 @@ input[type=range] {
     background-color: transparent;
     border: none;
     outline: none;
-    width: 100%;
-    margin: 30px 0px 20px 0px;
-    padding: 0;
+    width: auto;
+    margin: 1px 0px 0px 0px;
+    padding: 10px 0px 0px 5px;
 }
 
 input[type=range] + .thumb {
     position: absolute;
     border: none;
-    height: 0;
-    width: 0;
+    height: 0px;
+    width: 0px;
     border-radius: 50%;
     background-color: rgb(195, 39, 41);
-    top: 10px;
-    margin-left: -6px;
+    top: 0;
+    margin-top: 4px;
+    margin-left: -1px;
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
     -webkit-transform: rotate(-45deg);
@@ -97,7 +153,14 @@ input[type=range] + .thumb .value {
 }
 
 input[type=range] + .thumb.active {
-    border-radius: 50% 50% 50% 0;
+    border-radius: 0% 50% 0% 50%;
+    z-index: 10;
+    /*
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: translateX(-15px);
+    transform: translateX(-15px);
+    */
 }
 
 input[type=range] + .thumb.active .value {
@@ -113,15 +176,17 @@ input[type=range]:focus {
     outline: none;
 }
 
-input[type=range] {
-    -webkit-appearance: none;
-}
-
 input[type=range]::-webkit-slider-runnable-track {
-    height: 3px;
+    margin: 2px 0 0 0;
+    height: 2px;
     background: #000;
     border: none;
 }
+
+.changed input[type=range]::-webkit-slider-runnable-track {
+    background: rgb(180, 95, 23);
+}
+
 
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -132,13 +197,12 @@ input[type=range]::-webkit-slider-thumb {
     background-color: rgb(195, 39, 41);
     -webkit-transform-origin: 50% 50%;
     transform-origin: 50% 50%;
-    margin: -5px 0 0 0;
+    margin: -6px 0 0 0;
     transition: .3s;
 }
 
 input[type=range]:focus::-webkit-slider-runnable-track {
     /*  background: #cccccc;*/
-    background: rgba(255, 35, 38, 0.74);
 }
 
 input[type=range] {

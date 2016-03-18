@@ -1,5 +1,5 @@
 /*jslint browser: true, devel: true, node: true*/
-/*global $, jQuery, alert*/
+/*global $, jQuery, alert, get2D*/
 var fs  = require('fs');
 var ini = require('ini');
 
@@ -12,16 +12,18 @@ $(document).ready(function () {
     var range_type = 'input[type=range]',
         range_mousedown = false,
         left,
-        range_wrapper = '.range-field',
-        config_page = 1;
-
-
-    $('#nav-config-up')[0].setAttribute("class", 'fa fa-caret-up fa-lg nav-config nav-config-limit');
-    $('#nav-config-down')[0].setAttribute("class", 'fa fa-caret-down fa-lg nav-config');
+        prev_value,
+        range_wrapper = '.range-field';
 
     $(range_type).each(function () {
         var thumb = $('<span class="thumb"><span class="value"></span></span>');
         $(this).after(thumb);
+
+        thumb.css({
+            height: "0px",
+            width: "0px",
+            top: "50%"
+        });
     });
 
     $(document).on('change', range_type, function (e) {
@@ -30,7 +32,8 @@ $(document).ready(function () {
     });
 
     $(document).on('input mousedown touchstart', range_type, function (e) {
-        var thumb = $(this).siblings('.thumb'), width = $(this).outerWidth();
+        var thumb = $(this).siblings('.thumb'),
+            width = $(this).outerWidth();
 
         // If thumb indicator does not exist yet, create it
         if (thumb.length <= 0) {
@@ -41,15 +44,18 @@ $(document).ready(function () {
         // Set indicator value
         thumb.find('.value').html($(this).val() + "\'");
 
+        // Memo value to check a change
+        prev_value = $(this).val();
+
         range_mousedown = true;
         $(this).addClass('active');
+        $(this).removeClass('changed');
 
         if (!thumb.hasClass('active')) {
             thumb.stop().animate({
                 height: "30px",
                 width: "30px",
-                top: "5px",
-                marginLeft: "-15px"
+                top: "-50%"
             }, 300, "linear");
         }
 
@@ -64,7 +70,7 @@ $(document).ready(function () {
             } else if (left > width) {
                 left = width;
             }
-            thumb.addClass('active').css('left', left);
+            thumb.addClass('active').css('left', left - 14);
         }
 
         thumb.find('.value').html($(this).val() + "\'");
@@ -73,6 +79,9 @@ $(document).ready(function () {
     $(document).on('mouseup touchend', range_wrapper, function () {
         range_mousedown = false;
         $(this).removeClass('active');
+        if (prev_value !== $(this).val()) {
+            $(this).addClass('changed');
+        }
     });
 
     $(document).on('mousemove touchmove', range_wrapper, function (e) {
@@ -81,9 +90,7 @@ $(document).ready(function () {
             if (!thumb.hasClass('active')) {
                 thumb.stop().animate({
                     height: "30px",
-                    width: "30px",
-                    top: "5px",
-                    marginLeft: "-15px"
+                    width: "30px"
                 }, 300, "linear");
             }
             if (e.pageX === undefined || e.pageX === null) { //mobile
@@ -97,7 +104,7 @@ $(document).ready(function () {
             } else if (left > width) {
                 left = width;
             }
-            thumb.addClass('active').css('left', left);
+            thumb.addClass('active').css('left', left - 14);
             thumb.find('.value').html(thumb.siblings(range_type).val() + "\'");
         }
     });
@@ -111,47 +118,12 @@ $(document).ready(function () {
                 thumb.stop().animate({
                     height: "0px",
                     width: "0px",
-                    top: "0px",
-                    marginleft: "-6px"
+                    top: "50%"
                 }, {
                     duration: 100
                 });
             }
             thumb.removeClass('active');
-        }
-    });
-
-    $('#nav-config-up').click(function () {
-        if (config_page > 1) {
-            $('.range-group').stop().animate({
-                top: "-" + (config_page - 1) * 85 + "px"
-            }, 200);
-            config_page -= 1;
-            $('.range-group').stop().animate({
-                top: "-" + (config_page - 1) * 85 + "px"
-            }, 200);
-
-            if (config_page === 1) {
-                $('#nav-config-up')[0].setAttribute("class", 'fa fa-caret-up fa-lg nav-config nav-config-limit');
-            }
-            $('#nav-config-down')[0].setAttribute("class", 'fa fa-caret-down fa-lg nav-config');
-        }
-    });
-
-    $('#nav-config-down').click(function () {
-        if (config_page < 3) {
-            $('.range-group').stop().animate({
-                top: "-" + (config_page - 1) * 85 + "px"
-            }, 200);
-            config_page += 1;
-            $('.range-group').stop().animate({
-                top: "-" + (config_page - 1) * 85 + "px"
-            }, 200);
-
-            if (config_page === 3) {
-                $('#nav-config-down')[0].setAttribute("class", 'fa fa-caret-down fa-lg nav-config nav-config-limit');
-            }
-            $('#nav-config-up')[0].setAttribute("class", 'fa fa-caret-up fa-lg nav-config');
         }
     });
 
@@ -166,10 +138,12 @@ $(document).ready(function () {
         config.time.shortBreakTime  =  l_shortBreakTime;
         config.time.pomodoriTime    =  l_pomodoriTime;
 
-        $('#workTime').text("Work Time : " + $('input[name=workTime]').val() + "\'");
-        $('#shortBreakTime').text("Short Breaks : " + $('input[name=shortBreakTime]').val() + "\'");
-        $('#longBreakTime').text("Long Breaks : " + $('input[name=longBreakTime]').val() + "\'");
+        $('#workTime').text(get2D($('input[name=workTime]').val()) + "\'");
+        $('#shortBreakTime').text(get2D($('input[name=shortBreakTime]').val()) + "\'");
+        $('#longBreakTime').text(get2D($('input[name=longBreakTime]').val()) + "\'");
 
         fs.writeFileSync(configFile, ini.stringify(config));
+
+        $('.range-field').removeClass('changed');
     });
 });
