@@ -199,7 +199,7 @@ function timerFunc() {
         drawTimer(0, timerFinish);
         pomodoriEnd();
         break;
-            
+
     case "pause":
         break;
 
@@ -239,8 +239,8 @@ $(document).ready(function () {
     timer = setInterval(function () {
         timerFunc();
     }, refreshPeriod);
-    
-    
+
+
     $('.quit').click(function (e) {
         var win = require('nw.gui').Window.get();
         win.close();
@@ -271,7 +271,7 @@ $(document).ready(function () {
         case "pause":
             $('span#watch')[0].setAttribute("class", 'fa fa-stop-circle startstop fa-4x');
             state = "stop";
-    
+
             timerFinish  = pomodoriTime;
             timerCurrent = timerFinish;
             currentPomodori = 0;
