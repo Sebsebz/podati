@@ -44,9 +44,9 @@ for (t_i = 0; t_i < gui.App.argv.length; t_i += 1) {
 if (debug_activated === true) {
     win.showDevTools('', true);
 
-    gulp.watch(['*.css'], ['css']);
-    gulp.watch(['*.scss'], ['scss']);
-    gulp.watch(['*.js'], ['js']);
+    gulp.watch(['css/*.css'], ['css']);
+    gulp.watch(['scss/*.scss'], ['scss']);
+    gulp.watch(['js/*.js'], ['js']);
     gulp.watch(['*.html'], ['html']);
 }
 

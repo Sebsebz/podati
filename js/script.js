@@ -46,7 +46,7 @@ Date.prototype.getWeek = function (dowOffset) {
         nday      = 0;
 
     day = (day >= 0 ? day : day + 7);
-    
+
     //if the year starts before the middle of a week
     if (day < 4) {
         weeknum = Math.floor((daynum + day - 1) / 7) + 1;
@@ -301,7 +301,7 @@ function updateCalHeatMap(dbPomodoro) {
             }
             pomodoroNb = dbPomodoro[dateKey];
         }
-        
+
         document.getElementById("calheatmap").innerHTML +=
             '<div class="day ' + dayString[myDate.getDay()] +
             " " + heatmap + " " +
