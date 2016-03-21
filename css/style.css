@@ -17,6 +17,18 @@ body {
     height: 100%;
 }
 
+.grp_pomodoro {
+    height: 75px;
+    position:absolute;
+    width:190px;
+    top: 50%;
+
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
 /* Views */
 .datetime {
     height:85px;
