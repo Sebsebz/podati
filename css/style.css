@@ -1,3 +1,7 @@
+* {
+    -webkit-user-select: none;
+}
+
 /* Window */
 body {
     -webkit-app-region: drag;
